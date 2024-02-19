@@ -25,9 +25,7 @@ const (
 )
 
 type Coordinator struct {
-	// Your definitions here.
-	mu sync.Mutex
-
+	mu              sync.Mutex
 	nReduce         int
 	workers         []int
 	mapTasks        []*task
@@ -36,7 +34,7 @@ type Coordinator struct {
 	reduceTasksDone int
 }
 
-// assign a worker id and nReduce to the worker
+// provide the worker with the number of reduce tasks and an id
 func (c *Coordinator) RegisterHandler(args *RegisterRequest, reply *RegisterResponse) error {
 	c.mu.Lock()
 	defer c.mu.Unlock()

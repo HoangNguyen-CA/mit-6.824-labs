@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"hash/fnv"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/rpc"
 	"os"
@@ -51,6 +50,7 @@ func Worker(mapf func(string, string) []KeyValue,
 	}
 }
 
+// register the worker with the coordinator
 func callRegister() (RegisterResponse, error) {
 	args := RegisterRequest{}
 
@@ -63,26 +63,26 @@ func callRegister() (RegisterResponse, error) {
 	return reply, nil
 }
 
+// call the coordinator to get a task
 func callReady(r *Runner) bool {
 	args := ReadyRequest{r.id}
 
 	reply := ReadyReply{}
 
 	if ok := call("Coordinator.ReadyHandler", &args, &reply); !ok {
-		fmt.Printf("callReady RPC failed")
-		return false
+		log.Fatal("callReady RPC failed")
 	}
 
-	r.taskId = reply.TaskNumber
+	taskId := reply.TaskNumber
 
 	if reply.TaskType == MapTaskType {
 		intermediate := r.runMap(reply.FileName)
-		r.storeIntermediate(intermediate)
+		r.storeIntermediate(taskId, intermediate)
 		CallDoneMap(r)
 	}
 
 	if reply.TaskType == ReduceTaskType {
-		r.runReduce()
+		r.runReduce(taskId)
 		CallDoneReduce(r)
 	}
 
@@ -120,7 +120,6 @@ func CallDoneReduce(r *Runner) {
 type Runner struct {
 	id      int
 	nReduce int
-	taskId  int
 	mapf    func(string, string) []KeyValue
 	reducef func(string, []string) string
 }
@@ -153,10 +152,10 @@ func (r *Runner) runMap(inputFile string) [][]KeyValue {
 	return res
 }
 
-func (r *Runner) storeIntermediate(intermediate [][]KeyValue) {
-
+// store intermediate results from mapping in form of mr-<task_id>-<i> files
+func (r *Runner) storeIntermediate(taskId int, intermediate [][]KeyValue) {
 	for i, kva := range intermediate {
-		file, err := ioutil.TempFile("", fmt.Sprintf("inter-%v", r.taskId))
+		file, err := os.CreateTemp("", fmt.Sprintf("tmpint-%v", taskId))
 		if err != nil {
 			log.Fatalf("cannot create intermediate file")
 		}
@@ -168,12 +167,14 @@ func (r *Runner) storeIntermediate(intermediate [][]KeyValue) {
 			}
 		}
 
-		os.Rename(file.Name(), fmt.Sprintf("mr-%v-%v", r.taskId, i))
+		// atomic rename to prevent partial results
+		os.Rename(file.Name(), fmt.Sprintf("mr-%v-%v", taskId, i))
 	}
 }
 
-func (r *Runner) runReduce() {
-	files, err := getFilesWithSuffix(fmt.Sprint(r.taskId))
+// runs the reduce process
+func (r *Runner) runReduce(taskId int) {
+	files, err := getFilesWithSuffix(fmt.Sprint(taskId))
 	if err != nil {
 		log.Fatalf("cannot get files with suffix")
 	}
@@ -197,7 +198,7 @@ func (r *Runner) runReduce() {
 	}
 	sort.Sort(ByKey(values))
 
-	ofile, err := ioutil.TempFile("", fmt.Sprintf("tmp-%v", r.taskId))
+	ofile, err := os.CreateTemp("", fmt.Sprintf("tmprdc-%v", taskId))
 
 	if err != nil {
 		log.Fatalf("cannot create temp file")
@@ -220,10 +221,10 @@ func (r *Runner) runReduce() {
 
 		i = j
 	}
-
 	ofile.Close()
 
-	os.Rename(ofile.Name(), fmt.Sprintf("mr-out-%v", r.taskId))
+	// atomic rename to prevent partial results
+	os.Rename(ofile.Name(), fmt.Sprintf("mr-out-%v", taskId))
 }
 
 // send an RPC request to the coordinator, wait for the response.
@@ -247,12 +248,13 @@ func call(rpcname string, args interface{}, reply interface{}) bool {
 	return false
 }
 
+// helper function returning all intermediate files with a given suffix
 func getFilesWithSuffix(suffix string) ([]string, error) {
 	dir, err := os.Getwd()
 	if err != nil {
 		return nil, err
 	}
-	files, err := ioutil.ReadDir(dir)
+	files, err := os.ReadDir(dir)
 	if err != nil {
 		return nil, err
 	}
