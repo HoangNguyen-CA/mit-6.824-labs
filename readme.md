@@ -16,5 +16,7 @@ Brief summary of functionality:
 - Each map task maps to nReduce intemediary files on the local filesystem.
 - Each reduce task consumes from corresponding intermediary files and produces final result.
 - If a task takes too long to complete (>10s), the coordinator will assign the task to a free worker.
+- Coordinator prevents data races by using a mutex lock. 
 
-![Lab1 test result](./lab1/image.png)
+![Lab1 test result](./lab1.png)
+
