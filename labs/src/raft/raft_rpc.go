@@ -62,7 +62,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		reply.VoteGranted = true
 		rf.resetElectionTimer()
 	} else {
-		Debug(dVote, "Server %v with votedFor = %v rejected vote request from %v", rf.me, rf.votedFor, args.CandidateId)
+		Debug(dVote, "Server %v rejected vote request from %v", rf.me, args.CandidateId)
 	}
 }
 
@@ -75,11 +75,11 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	reply.Term = rf.currentTerm
 	reply.Success = false
 
-	logMatch := true // TODO: check if log matches
-
-	if args.Term < rf.currentTerm || !logMatch {
+	if args.Term < rf.currentTerm {
 		return
 	}
+
+	logMatch := true // TODO: check if log matches
 
 	if args.Term > rf.currentTerm || rf.state == Candidate {
 		rf.demoteToFollower(args.Term)
@@ -128,20 +128,57 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *Ap
 	return ok
 }
 
-// called conccurently in a goroutine
-func (rf *Raft) broadcastAppendEntries() {
+type BroadcastRequestVotesReply struct {
+	reply *RequestVoteReply
+	ok    bool
+}
+
+// requires lock, synchronous, non-blocking.
+func (rf *Raft) broadcastRequestVotes(replyCh chan<- BroadcastRequestVotesReply) {
+	args := &RequestVoteArgs{
+		Term:         rf.currentTerm,
+		CandidateId:  rf.me,
+		LastLogIndex: len(rf.log) - 1,
+		LastLogTerm:  rf.log[len(rf.log)-1].Term,
+	}
+
 	for i := range rf.peers {
 		if i == rf.me {
 			continue
 		}
 
+		go func(p int) {
+			reply := &RequestVoteReply{}
+			ok := rf.sendRequestVote(p, args, reply)
+			replyCh <- BroadcastRequestVotesReply{ok: ok, reply: reply}
+		}(i)
+	}
+}
+
+type BroadcastAppendEntriesReply struct {
+	reply *AppendEntriesReply
+	ok    bool
+}
+
+// requires lock, synchronous, non-blocking.
+func (rf *Raft) broadcastAppendEntries(replyCh chan<- BroadcastAppendEntriesReply) {
+
+	args := &AppendEntriesArgs{
+		Term:         rf.currentTerm,
+		LeaderId:     rf.me,
+		PrevLogIndex: len(rf.log) - 1,
+		PrevLogTerm:  rf.log[len(rf.log)-1].Term,
+		LeaderCommit: rf.commitIndex,
+	}
+
+	for i := range rf.peers {
+		if i == rf.me {
+			continue
+		}
 		go func(i int) {
-			args := &AppendEntriesArgs{
-				Term:     rf.currentTerm,
-				LeaderId: rf.me,
-			}
 			reply := &AppendEntriesReply{}
-			rf.sendAppendEntries(i, args, reply)
+			ok := rf.sendAppendEntries(i, args, reply)
+			replyCh <- BroadcastAppendEntriesReply{ok: ok, reply: reply}
 		}(i)
 	}
 }

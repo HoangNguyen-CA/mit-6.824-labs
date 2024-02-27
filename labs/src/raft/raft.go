@@ -101,7 +101,11 @@ func randElectionTimeout() time.Duration {
 	return time.Duration(rand.Intn(ElectionTimeoutMax-ElectionTimeoutMin)+ElectionTimeoutMin) * time.Millisecond
 }
 
-// needs lock
+// resets the election timer using randElectionTimeout(). should only be called when:
+// (1) receiving a valid AppendEntries RPC.
+// (2) receiving a valid RequestVote RPC (and voting for the candidate).
+// (3) converting to candidate (and starting election).
+// requires lock
 func (rf *Raft) resetElectionTimer() {
 	if !rf.electionTimer.Stop() {
 		select {
@@ -112,62 +116,57 @@ func (rf *Raft) resetElectionTimer() {
 	rf.electionTimer.Reset(randElectionTimeout())
 }
 
-// need to be called with lock
+// demote to follower and reset votedFor state. should only be called when:
+// (1) if discovered rpc term is greater than currentTerm.
+// (2) if is candidate and received AppendEntries from new leader.
+// requires lock
 func (rf *Raft) demoteToFollower(nTerm int) {
 	Debug(dInfo, "Server %v demoted to follower", rf.me)
-
 	rf.state = Follower
 	rf.currentTerm = nTerm
 	rf.votedFor = -1
-	rf.resetElectionTimer()
 }
 
-// converts to candidate and start election
-// called in a goroutine
+// promote candidate to leader and start sending heartbeats. should only be called when:
+// (1) is candidate and won election.
+// requires lock
+func (rf *Raft) promoteToLeader() {
+	if rf.state != Candidate {
+		return
+	}
+	Debug(dInfo, "Server %v promoted to leader", rf.me)
+	rf.state = Leader
+	rf.broadcastAppendEntries(make(chan<- BroadcastAppendEntriesReply))
+}
+
+// converts to candidate and starts election. should only be called when:
+// (1) is follower and election timer expires.
+// (2) is candidate and election timer expires.
+// call in goroutine to prevent waiting for RPCs
 func (rf *Raft) convertToCandidate() {
 
 	rf.mu.Lock()
-
+	if rf.state == Leader {
+		rf.mu.Unlock()
+		return
+	}
 	rf.state = Candidate
-
 	rf.currentTerm++
 	rf.votedFor = rf.me
-
 	rf.resetElectionTimer()
-
 	Debug(dVote, "Server %v started election for term %v", rf.me, rf.currentTerm)
 	rf.mu.Unlock()
 
-	voteResults := make(chan bool, len(rf.peers))
+	voteResults := make(chan BroadcastRequestVotesReply, len(rf.peers)-1)
 
-	// TODO: fill out log args
-	args := &RequestVoteArgs{
-		Term:         rf.currentTerm,
-		CandidateId:  rf.me,
-		LastLogIndex: len(rf.log),
-		LastLogTerm:  0,
-	}
-
-	for peer := range rf.peers {
-		if peer == rf.me {
-			continue
-		}
-
-		go func(p int) {
-			reply := &RequestVoteReply{}
-			ok := rf.sendRequestVote(p, args, reply)
-
-			if ok {
-				voteResults <- reply.VoteGranted
-			} else {
-				voteResults <- false
-			}
-		}(peer)
-	}
+	rf.mu.Lock()
+	rf.broadcastRequestVotes(voteResults)
+	rf.mu.Unlock()
 
 	votes := 1
 	for i := 0; i < len(rf.peers)-1; i++ {
-		if <-voteResults {
+		res := <-voteResults
+		if res.ok && res.reply.VoteGranted {
 			votes++
 			if votes > len(rf.peers)/2 {
 				rf.mu.Lock()
@@ -178,17 +177,6 @@ func (rf *Raft) convertToCandidate() {
 			}
 		}
 	}
-}
-
-// need to be called with lock
-func (rf *Raft) promoteToLeader() {
-	if rf.state != Candidate {
-		return
-	}
-	Debug(dInfo, "Server %v promoted to leader", rf.me)
-	rf.state = Leader
-
-	rf.broadcastAppendEntries()
 }
 
 // return currentTerm and whether this server
@@ -268,11 +256,13 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 // term. the third return value is true if this server believes it is
 // the leader.
 func (rf *Raft) Start(command interface{}) (int, int, bool) {
-	index := -1
-	term := -1
-	isLeader := true
-
 	// Your code here (2B).
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+	index := len(rf.log)
+	term := rf.currentTerm
+
+	isLeader := rf.state == Leader
 
 	return index, term, isLeader
 }
@@ -321,7 +311,7 @@ func (rf *Raft) ticker() {
 			case <-time.After(HeartbeatInterval):
 				rf.mu.Lock()
 				if rf.state == Leader {
-					rf.broadcastAppendEntries()
+					rf.broadcastAppendEntries(make(chan<- BroadcastAppendEntriesReply))
 				}
 				rf.mu.Unlock()
 			}
@@ -345,24 +335,16 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	rf.me = me
 
 	// Your initialization code here (2A, 2B, 2C)
-	rf.state = Follower
 	rf.currentTerm = 0
 	rf.votedFor = -1
+	rf.log = make([]LogEntry, 0)
+	rf.log = append(rf.log, LogEntry{Term: 0}) // dummy entry to match paper's 1-indexing
+
+	//extra state
+	rf.state = Follower
 	rf.electionTimer = time.NewTimer(randElectionTimeout())
 
 	initDebug()
-
-	// go func() {
-	// 	for !rf.killed() {
-	// 		time.Sleep(HeartbeatInterval)
-
-	// 		rf.mu.Lock()
-	// 		if rf.state == Leader {
-	// 			go rf.sendHeartbeats()
-	// 		}
-	// 		rf.mu.Unlock()
-	// 	}
-	// }()
 
 	// start ticker goroutine to start elections
 	go rf.ticker()

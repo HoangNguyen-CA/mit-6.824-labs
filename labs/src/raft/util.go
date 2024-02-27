@@ -9,14 +9,7 @@ import (
 )
 
 // Debugging
-const debug = true
-
-// func DPrintf(format string, a ...interface{}) (n int, err error) {
-// 	if Debug {
-// 		log.Printf(format, a...)
-// 	}
-// 	return
-// }
+const debug = false
 
 func getVerbosity() int {
 	v := os.Getenv("VERBOSE")
