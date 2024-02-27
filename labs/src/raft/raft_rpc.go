@@ -39,6 +39,8 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 
+	Debug(dVote, "Server %v received vote request from %v with term %v", rf.me, args.CandidateId, args.Term)
+
 	reply.VoteGranted = false
 	reply.Term = rf.currentTerm
 
@@ -48,9 +50,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	}
 
 	if args.Term > rf.currentTerm {
-		rf.currentTerm = args.Term
-		rf.convertToFollower()
-		rf.votedFor = -1
+		rf.demoteToFollower(args.Term)
 	}
 
 	logUpdated := true // TODO: check if log is up to date
@@ -82,9 +82,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	}
 
 	if args.Term > rf.currentTerm || rf.state == Candidate {
-		rf.currentTerm = args.Term
-		rf.convertToFollower()
-		rf.votedFor = -1
+		rf.demoteToFollower(args.Term)
 	}
 
 	// TODO: process log entries
@@ -132,18 +130,18 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *Ap
 
 // called conccurently in a goroutine
 func (rf *Raft) broadcastAppendEntries() {
-	// for i := range rf.peers {
-	// 	if i == rf.me {
-	// 		continue
-	// 	}
+	for i := range rf.peers {
+		if i == rf.me {
+			continue
+		}
 
-	// 	go func(i int) {
-	// 		args := &AppendEntriesArgs{
-	// 			Term:     rf.currentTerm,
-	// 			LeaderId: rf.me,
-	// 		}
-	// 		reply := &AppendEntriesReply{}
-	// 		rf.sendAppendEntries(i, args, reply)
-	// 	}(i)
-	// }
+		go func(i int) {
+			args := &AppendEntriesArgs{
+				Term:     rf.currentTerm,
+				LeaderId: rf.me,
+			}
+			reply := &AppendEntriesReply{}
+			rf.sendAppendEntries(i, args, reply)
+		}(i)
+	}
 }

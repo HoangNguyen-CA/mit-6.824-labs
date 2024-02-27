@@ -27,9 +27,9 @@ import (
 )
 
 const (
-	HeartbeatInterval  = 200 * time.Millisecond
+	HeartbeatInterval  = 100 * time.Millisecond
 	ElectionTimeoutMin = 400
-	ElectionTimeoutMax = 600
+	ElectionTimeoutMax = 800
 )
 
 // as each Raft peer becomes aware that successive log entries are
@@ -101,68 +101,94 @@ func randElectionTimeout() time.Duration {
 	return time.Duration(rand.Intn(ElectionTimeoutMax-ElectionTimeoutMin)+ElectionTimeoutMin) * time.Millisecond
 }
 
-// need to be called with lock to prevent timer races
+// needs lock
 func (rf *Raft) resetElectionTimer() {
 	if !rf.electionTimer.Stop() {
-		<-rf.electionTimer.C
+		select {
+		case <-rf.electionTimer.C:
+		default:
+		}
 	}
-
 	rf.electionTimer.Reset(randElectionTimeout())
 }
 
 // need to be called with lock
-func (rf *Raft) demoteToFollower(from State) {
-	Debug(dInfo, "Server %v converted to follower", rf.me)
+func (rf *Raft) demoteToFollower(nTerm int) {
+	Debug(dInfo, "Server %v demoted to follower", rf.me)
+
 	rf.state = Follower
+	rf.currentTerm = nTerm
+	rf.votedFor = -1
+	rf.resetElectionTimer()
 }
 
+// converts to candidate and start election
+// called in a goroutine
 func (rf *Raft) convertToCandidate() {
-	Debug(dInfo, "Server %v converted to candidate", rf.me)
+
+	rf.mu.Lock()
+
 	rf.state = Candidate
 
-	rf.runElection()
-}
-
-// need locks
-func (rf *Raft) convertToLeader() {
-
-	Debug(dInfo, "Server %v converted to leader", rf.me)
-	rf.state = Leader
-
-	go rf.broadcastAppendEntries()
-}
-
-// start the election, needs lock
-func (rf *Raft) runElection() {
 	rf.currentTerm++
 	rf.votedFor = rf.me
+
 	rf.resetElectionTimer()
-	votes := 1
 
 	Debug(dVote, "Server %v started election for term %v", rf.me, rf.currentTerm)
+	rf.mu.Unlock()
 
+	voteResults := make(chan bool, len(rf.peers))
+
+	// TODO: fill out log args
 	args := &RequestVoteArgs{
 		Term:         rf.currentTerm,
 		CandidateId:  rf.me,
-		LastLogIndex: 0, // TODO
-		LastLogTerm:  0, // TODO
+		LastLogIndex: len(rf.log),
+		LastLogTerm:  0,
 	}
 
-	for i := range rf.peers {
-		if i == rf.me {
+	for peer := range rf.peers {
+		if peer == rf.me {
 			continue
 		}
 
-		reply := &RequestVoteReply{}
-		rf.sendRequestVote(i, args, reply)
-		if reply.VoteGranted {
+		go func(p int) {
+			reply := &RequestVoteReply{}
+			ok := rf.sendRequestVote(p, args, reply)
+
+			if ok {
+				voteResults <- reply.VoteGranted
+			} else {
+				voteResults <- false
+			}
+		}(peer)
+	}
+
+	votes := 1
+	for i := 0; i < len(rf.peers)-1; i++ {
+		if <-voteResults {
 			votes++
 			if votes > len(rf.peers)/2 {
-				rf.convertToLeader()
-				return
+				rf.mu.Lock()
+				Debug(dVote, "Server %v won election for term %v", rf.me, rf.currentTerm)
+				rf.promoteToLeader()
+				rf.mu.Unlock()
+				break
 			}
 		}
 	}
+}
+
+// need to be called with lock
+func (rf *Raft) promoteToLeader() {
+	if rf.state != Candidate {
+		return
+	}
+	Debug(dInfo, "Server %v promoted to leader", rf.me)
+	rf.state = Leader
+
+	rf.broadcastAppendEntries()
 }
 
 // return currentTerm and whether this server
@@ -281,24 +307,25 @@ func (rf *Raft) ticker() {
 		case Follower:
 			select {
 			case <-rf.electionTimer.C:
-				rf.mu.Lock()
-				rf.convertToCandidate()
-				rf.mu.Unlock()
+				go rf.convertToCandidate()
+			default:
 			}
 		case Candidate:
 			select {
 			case <-rf.electionTimer.C:
-				rf.mu.Lock()
-				rf.convertToCandidate()
-				rf.mu.Unlock()
+				go rf.convertToCandidate()
+			default:
 			}
 		case Leader:
 			select {
-			case time.After(HeartbeatInterval):
+			case <-time.After(HeartbeatInterval):
 				rf.mu.Lock()
-				rf.broadcastAppendEntries()
+				if rf.state == Leader {
+					rf.broadcastAppendEntries()
+				}
 				rf.mu.Unlock()
 			}
+		}
 	}
 }
 
@@ -311,8 +338,7 @@ func (rf *Raft) ticker() {
 // tester or service expects Raft to send ApplyMsg messages.
 // Make() must return quickly, so it should start goroutines
 // for any long-running work.
-func Make(peers []*labrpc.ClientEnd, me int,
-	persister *Persister, applyCh chan ApplyMsg) *Raft {
+func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan ApplyMsg) *Raft {
 	rf := &Raft{}
 	rf.peers = peers
 	rf.persister = persister
