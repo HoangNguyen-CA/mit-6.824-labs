@@ -79,7 +79,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		return
 	}
 
-	logMatch := true // TODO: check if log matches
+	// logMatch := true // TODO: check if log matches
 
 	if args.Term > rf.currentTerm || rf.state == Candidate {
 		rf.demoteToFollower(args.Term)
@@ -128,57 +128,84 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *Ap
 	return ok
 }
 
-type BroadcastRequestVotesReply struct {
-	reply *RequestVoteReply
-	ok    bool
-}
-
-// requires lock, synchronous, non-blocking.
-func (rf *Raft) broadcastRequestVotes(replyCh chan<- BroadcastRequestVotesReply) {
-	args := &RequestVoteArgs{
-		Term:         rf.currentTerm,
-		CandidateId:  rf.me,
-		LastLogIndex: len(rf.log) - 1,
-		LastLogTerm:  rf.log[len(rf.log)-1].Term,
-	}
-
+func (rf *Raft) broadcastRequestVotes() {
 	for i := range rf.peers {
 		if i == rf.me {
 			continue
 		}
 
 		go func(p int) {
+
+			rf.mu.Lock()
+			args := &RequestVoteArgs{
+				Term:         rf.currentTerm,
+				CandidateId:  rf.me,
+				LastLogIndex: len(rf.log) - 1,
+				LastLogTerm:  rf.log[len(rf.log)-1].Term,
+			}
+
+			rf.mu.Unlock()
+
 			reply := &RequestVoteReply{}
 			ok := rf.sendRequestVote(p, args, reply)
-			replyCh <- BroadcastRequestVotesReply{ok: ok, reply: reply}
+			if !ok {
+				return
+			}
+
+			rf.mu.Lock()
+
+			if reply.Term > rf.currentTerm {
+				rf.demoteToFollower(reply.Term)
+			}
+
+			if reply.VoteGranted {
+				rf.votes++
+				if rf.votes > len(rf.peers)/2 {
+					rf.mu.Unlock()
+					rf.promoteToLeader()
+					return
+				}
+			}
+
+			rf.mu.Unlock()
 		}(i)
 	}
 }
 
-type BroadcastAppendEntriesReply struct {
-	reply *AppendEntriesReply
-	ok    bool
-}
-
-// requires lock, synchronous, non-blocking.
-func (rf *Raft) broadcastAppendEntries(replyCh chan<- BroadcastAppendEntriesReply) {
-
-	args := &AppendEntriesArgs{
-		Term:         rf.currentTerm,
-		LeaderId:     rf.me,
-		PrevLogIndex: len(rf.log) - 1,
-		PrevLogTerm:  rf.log[len(rf.log)-1].Term,
-		LeaderCommit: rf.commitIndex,
-	}
-
+func (rf *Raft) broadcastAppendEntries() {
 	for i := range rf.peers {
 		if i == rf.me {
 			continue
 		}
 		go func(i int) {
+			rf.mu.Lock()
+
+			if rf.state != Leader {
+				rf.mu.Unlock()
+				return
+			}
+
+			args := &AppendEntriesArgs{
+				Term:         rf.currentTerm,
+				LeaderId:     rf.me,
+				PrevLogIndex: len(rf.log) - 1,
+				PrevLogTerm:  rf.log[len(rf.log)-1].Term,
+				LeaderCommit: rf.commitIndex,
+			}
+
+			rf.mu.Unlock()
+
 			reply := &AppendEntriesReply{}
 			ok := rf.sendAppendEntries(i, args, reply)
-			replyCh <- BroadcastAppendEntriesReply{ok: ok, reply: reply}
+			if !ok {
+				return
+			}
+
+			rf.mu.Lock()
+			if reply.Term > rf.currentTerm {
+				rf.demoteToFollower(reply.Term)
+			}
+			rf.mu.Unlock()
 		}(i)
 	}
 }

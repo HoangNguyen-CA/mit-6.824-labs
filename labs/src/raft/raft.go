@@ -92,6 +92,7 @@ type Raft struct {
 	matchIndex []int
 
 	//extra state
+	votes         int
 	state         State
 	electionTimer *time.Timer
 }
@@ -125,18 +126,21 @@ func (rf *Raft) demoteToFollower(nTerm int) {
 	rf.state = Follower
 	rf.currentTerm = nTerm
 	rf.votedFor = -1
+	rf.votes = 0
 }
 
 // promote candidate to leader and start sending heartbeats. should only be called when:
 // (1) is candidate and won election.
-// requires lock
 func (rf *Raft) promoteToLeader() {
+	rf.mu.Lock()
 	if rf.state != Candidate {
+		rf.mu.Unlock()
 		return
 	}
 	Debug(dInfo, "Server %v promoted to leader", rf.me)
 	rf.state = Leader
-	rf.broadcastAppendEntries(make(chan<- BroadcastAppendEntriesReply))
+	rf.mu.Unlock()
+	rf.broadcastAppendEntries()
 }
 
 // converts to candidate and starts election. should only be called when:
@@ -153,30 +157,12 @@ func (rf *Raft) convertToCandidate() {
 	rf.state = Candidate
 	rf.currentTerm++
 	rf.votedFor = rf.me
+	rf.votes = 1
 	rf.resetElectionTimer()
 	Debug(dVote, "Server %v started election for term %v", rf.me, rf.currentTerm)
 	rf.mu.Unlock()
 
-	voteResults := make(chan BroadcastRequestVotesReply, len(rf.peers)-1)
-
-	rf.mu.Lock()
-	rf.broadcastRequestVotes(voteResults)
-	rf.mu.Unlock()
-
-	votes := 1
-	for i := 0; i < len(rf.peers)-1; i++ {
-		res := <-voteResults
-		if res.ok && res.reply.VoteGranted {
-			votes++
-			if votes > len(rf.peers)/2 {
-				rf.mu.Lock()
-				Debug(dVote, "Server %v won election for term %v", rf.me, rf.currentTerm)
-				rf.promoteToLeader()
-				rf.mu.Unlock()
-				break
-			}
-		}
-	}
+	rf.broadcastRequestVotes()
 }
 
 // return currentTerm and whether this server
@@ -309,11 +295,7 @@ func (rf *Raft) ticker() {
 		case Leader:
 			select {
 			case <-time.After(HeartbeatInterval):
-				rf.mu.Lock()
-				if rf.state == Leader {
-					rf.broadcastAppendEntries(make(chan<- BroadcastAppendEntriesReply))
-				}
-				rf.mu.Unlock()
+				rf.broadcastAppendEntries()
 			}
 		}
 	}
@@ -341,6 +323,7 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	rf.log = append(rf.log, LogEntry{Term: 0}) // dummy entry to match paper's 1-indexing
 
 	//extra state
+	rf.votes = 0
 	rf.state = Follower
 	rf.electionTimer = time.NewTimer(randElectionTimeout())
 
