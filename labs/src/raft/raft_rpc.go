@@ -40,7 +40,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 
-	Debug(dVote, "Server %v received vote request from %v with term %v", rf.me, args.CandidateId, args.Term)
+	Debug(dVote, "Server %v received requestVote | term: %v, candidateId: %v, lastLogIndex: %v, lastLogTerm: %v", rf.me, args.Term, args.CandidateId, args.LastLogIndex, args.LastLogTerm)
 
 	reply.VoteGranted = false
 	reply.Term = rf.currentTerm
@@ -82,7 +82,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 
-	Debug(dAppend, "Server %v received appendEntries from %v with term %v", rf.me, args.LeaderId, args.Term)
+	Debug(dAppend, "Server %v received appendEntries | term: %v, leaderId: %v, prevLogIndex: %v, prevLogTerm: %v, leaderCommit: %v, entries: %v", rf.me, args.Term, args.LeaderId, args.PrevLogIndex, args.PrevLogTerm, args.LeaderCommit, args.Entries)
 
 	reply.Term = rf.currentTerm
 	reply.Success = false
@@ -91,13 +91,35 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		return
 	}
 
-	// logMatch := true // TODO: check if log matches
-
 	if args.Term > rf.currentTerm || rf.state == Candidate {
 		rf.demoteToFollower(args.Term)
 	}
 
-	// TODO: process log entries
+	// 2. Reply false if log doesn’t contain an entry at prevLogIndex
+	//whose term matches prevLogTerm (§5.3)
+	if args.PrevLogIndex >= len(rf.log) || rf.log[args.PrevLogIndex].Term != args.PrevLogTerm {
+		return
+	}
+
+	//3. If an existing entry conflicts with a new one (same index but different terms), delete the existing entry and all that follow it (§5.3)
+	//4. Append any new entries not already in the log
+	for _, entry := range args.Entries {
+		if entry.Index >= len(rf.log) {
+			rf.log = append(rf.log, entry)
+		} else if rf.log[entry.Index].Term != entry.Term {
+			rf.log = rf.log[:entry.Index]
+			rf.log = append(rf.log, entry)
+		}
+	}
+
+	//5. If leaderCommit > commitIndex, set commitIndex = min(leaderCommit, index of last new entry)
+	if args.LeaderCommit > rf.commitIndex {
+		if args.LeaderCommit < len(rf.log)-1 {
+			rf.commitIndex = args.LeaderCommit
+		} else {
+			rf.commitIndex = len(rf.log) - 1
+		}
+	}
 
 	rf.resetElectionTimer()
 	reply.Success = true
