@@ -96,6 +96,7 @@ type Raft struct {
 	votes         int
 	state         State
 	electionTimer *time.Timer
+	applyCh       chan ApplyMsg
 }
 
 // returns a random election timeout between ElectionTimeoutMin and ElectionTimeoutMax
@@ -257,6 +258,10 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 
 	isLeader := rf.state == Leader
 
+	if isLeader {
+		rf.log = append(rf.log, LogEntry{Term: term, Index: index, Command: command})
+	}
+
 	return index, term, isLeader
 }
 
@@ -284,6 +289,7 @@ func (rf *Raft) ticker() {
 
 		rf.mu.Lock()
 		state := rf.state
+
 		rf.mu.Unlock()
 
 		switch state {
@@ -298,11 +304,6 @@ func (rf *Raft) ticker() {
 			case <-rf.electionTimer.C:
 				go rf.convertToCandidate()
 			default:
-			}
-		case Leader:
-			select {
-			case <-time.After(HeartbeatInterval):
-				rf.broadcastAppendEntries()
 			}
 		}
 	}
@@ -340,12 +341,60 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 
 	//extra state
 	rf.votes = 0
+	rf.applyCh = applyCh
 	rf.state = Follower
 	rf.electionTimer = time.NewTimer(randElectionTimeout())
 
 	initDebug()
 
 	go rf.ticker()
+
+	go func() {
+		for !rf.killed() {
+			rf.mu.Lock()
+			//If there exists an N such that N > commitIndex, a majority
+			//of matchIndex[i] ≥ N, and log[N].term == currentTerm:
+			//set commitIndex = N (§5.3, §5.4)
+			if rf.commitIndex > rf.lastApplied {
+				rf.lastApplied++
+				entry := rf.log[rf.lastApplied]
+				applyMsg := ApplyMsg{CommandValid: true, Command: entry.Command, CommandIndex: entry.Index}
+				rf.applyCh <- applyMsg
+			}
+
+			//If commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine (§5.3)
+			if rf.state == Leader {
+				for N := len(rf.log) - 1; N > rf.commitIndex; N-- {
+					count := 1
+					for i := range rf.peers {
+						if i == rf.me {
+							continue
+						}
+						if rf.matchIndex[i] >= N {
+							count++
+						}
+					}
+					if count > len(rf.peers)/2 && rf.log[N].Term == rf.currentTerm {
+						rf.commitIndex = N
+						break
+					}
+				}
+
+			}
+			rf.mu.Unlock()
+		}
+	}()
+
+	go func() {
+		for !rf.killed() {
+			time.Sleep(HeartbeatInterval)
+			rf.mu.Lock()
+			if rf.state == Leader {
+				rf.broadcastAppendEntries()
+			}
+			rf.mu.Unlock()
+		}
+	}()
 
 	// initialize from state persisted before a crash
 	rf.readPersist(persister.ReadRaftState())

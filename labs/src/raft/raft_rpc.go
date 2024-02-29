@@ -211,6 +211,7 @@ func (rf *Raft) broadcastAppendEntries() {
 		if i == rf.me {
 			continue
 		}
+
 		go func(i int) {
 			rf.mu.Lock()
 
@@ -219,11 +220,14 @@ func (rf *Raft) broadcastAppendEntries() {
 				return
 			}
 
+			//If last log index ≥ nextIndex for a follower: send AppendEntries RPC with log entries starting at nextIndex
+
 			args := &AppendEntriesArgs{
 				Term:         rf.currentTerm,
 				LeaderId:     rf.me,
-				PrevLogIndex: len(rf.log) - 1,
-				PrevLogTerm:  rf.log[len(rf.log)-1].Term,
+				PrevLogIndex: rf.nextIndex[i] - 1,
+				Entries:      rf.log[rf.nextIndex[i]:],
+				PrevLogTerm:  rf.log[rf.nextIndex[i]-1].Term,
 				LeaderCommit: rf.commitIndex,
 			}
 
@@ -239,6 +243,17 @@ func (rf *Raft) broadcastAppendEntries() {
 			if reply.Term > rf.currentTerm {
 				rf.demoteToFollower(reply.Term)
 			}
+
+			//If successful: update nextIndex and matchIndex for follower (§5.3)
+			//If AppendEntries fails because of log inconsistency: decrement nextIndex and retry (§5.3)
+
+			if reply.Success {
+				rf.nextIndex[i] += len(args.Entries)
+				rf.matchIndex[i] = rf.nextIndex[i] - 1
+			} else {
+				rf.nextIndex[i]--
+			}
+
 			rf.mu.Unlock()
 		}(i)
 	}
