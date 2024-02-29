@@ -63,6 +63,7 @@ const (
 
 type LogEntry struct {
 	Term    int
+	Index   int
 	Command interface{}
 }
 
@@ -138,6 +139,12 @@ func (rf *Raft) promoteToLeader() {
 		return
 	}
 	Debug(dInfo, "Server %v promoted to leader", rf.me)
+
+	for i := range rf.peers {
+		rf.nextIndex[i] = len(rf.log)
+		rf.matchIndex[i] = 0
+	}
+
 	rf.state = Leader
 	rf.mu.Unlock()
 	rf.broadcastAppendEntries()
@@ -317,10 +324,19 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	rf.me = me
 
 	// Your initialization code here (2A, 2B, 2C)
+
+	//persistent state
 	rf.currentTerm = 0
 	rf.votedFor = -1
-	rf.log = make([]LogEntry, 0)
 	rf.log = append(rf.log, LogEntry{Term: 0}) // dummy entry to match paper's 1-indexing
+
+	//volatile state
+	rf.commitIndex = 0
+	rf.lastApplied = 0
+
+	//leader volatile state
+	rf.nextIndex = make([]int, len(rf.peers))
+	rf.matchIndex = make([]int, len(rf.peers))
 
 	//extra state
 	rf.votes = 0
@@ -329,7 +345,6 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 
 	initDebug()
 
-	// start ticker goroutine to start elections
 	go rf.ticker()
 
 	// initialize from state persisted before a crash

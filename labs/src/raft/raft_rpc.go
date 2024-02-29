@@ -23,6 +23,7 @@ type AppendEntriesArgs struct {
 	LeaderId     int
 	PrevLogIndex int
 	PrevLogTerm  int
+	Entries      []LogEntry
 	LeaderCommit int
 }
 
@@ -45,7 +46,6 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	reply.Term = rf.currentTerm
 
 	if args.Term < rf.currentTerm {
-		Debug(dVote, "Server %v rejected vote request from %v with lower term %v", rf.me, args.CandidateId, args.Term)
 		return
 	}
 
@@ -53,16 +53,28 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		rf.demoteToFollower(args.Term)
 	}
 
-	logUpdated := true // TODO: check if log is up to date
-	canVote := rf.votedFor == -1 || rf.votedFor == args.CandidateId
+	// If votedFor is null or candidateId, and candidate’s log is at
+	// least as up-to-date as receiver’s log, grant vote (§5.2, §5.4)
+	logUpdated := true
 
-	if canVote && logUpdated {
+	if args.LastLogTerm < rf.log[len(rf.log)-1].Term {
+		logUpdated = false
+	}
+
+	if args.LastLogTerm == rf.log[len(rf.log)-1].Term && args.LastLogIndex < len(rf.log)-1 {
+		logUpdated = false
+	}
+
+	if !logUpdated {
+		return
+	}
+
+	canVote := rf.votedFor == -1 || rf.votedFor == args.CandidateId
+	if canVote {
 		Debug(dVote, "Server %v voted for %v", rf.me, args.CandidateId)
 		rf.votedFor = args.CandidateId
 		reply.VoteGranted = true
 		rf.resetElectionTimer()
-	} else {
-		Debug(dVote, "Server %v rejected vote request from %v", rf.me, args.CandidateId)
 	}
 }
 
