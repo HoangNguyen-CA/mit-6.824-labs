@@ -352,9 +352,8 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	go func() {
 		for !rf.killed() {
 			rf.mu.Lock()
-			//If there exists an N such that N > commitIndex, a majority
-			//of matchIndex[i] ≥ N, and log[N].term == currentTerm:
-			//set commitIndex = N (§5.3, §5.4)
+			//If commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine (§5.3)
+
 			if rf.commitIndex > rf.lastApplied {
 				rf.lastApplied++
 				entry := rf.log[rf.lastApplied]
@@ -362,8 +361,9 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 				rf.applyCh <- applyMsg
 			}
 
-			//If commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine (§5.3)
 			if rf.state == Leader {
+				//If there exists an N such that N > commitIndex, a majority of matchIndex[i] ≥ N, and log[N].term == currentTerm: set commitIndex = N (§5.3, §5.4)
+
 				for N := len(rf.log) - 1; N > rf.commitIndex; N-- {
 					count := 1
 					for i := range rf.peers {
