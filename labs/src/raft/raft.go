@@ -27,7 +27,7 @@ import (
 )
 
 const (
-	HeartbeatInterval  = 200 * time.Millisecond
+	HeartbeatInterval  = 100 * time.Millisecond
 	ElectionTimeoutMin = 350
 	ElectionTimeoutMax = 500
 )

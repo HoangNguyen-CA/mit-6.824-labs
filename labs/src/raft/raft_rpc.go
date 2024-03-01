@@ -30,6 +30,10 @@ type AppendEntriesArgs struct {
 type AppendEntriesReply struct {
 	Term    int
 	Success bool
+
+	// for fast rollback
+	XIndex int
+	XLen   int
 }
 
 // logic: if the candidate's term is less than the receiver's term, the receiver rejects the vote
@@ -86,6 +90,8 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 	reply.Term = rf.currentTerm
 	reply.Success = false
+	reply.XIndex = -1
+	reply.XLen = -1
 
 	if args.Term < rf.currentTerm {
 		return
@@ -93,11 +99,25 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 	if args.Term > rf.currentTerm || rf.state == Candidate {
 		rf.demoteToFollower(args.Term)
+	} else {
+		rf.resetElectionTimer()
 	}
 
-	// 2. Reply false if log doesn’t contain an entry at prevLogIndex
-	//whose term matches prevLogTerm (§5.3)
-	if args.PrevLogIndex >= len(rf.log) || rf.log[args.PrevLogIndex].Term != args.PrevLogTerm {
+	// 2. Reply false if log doesn’t contain an entry at prevLogIndex whose term matches prevLogTerm (§5.3)
+	// send additional information for faster rollback
+	if args.PrevLogIndex >= len(rf.log) {
+		reply.XLen = len(rf.log)
+		return
+	}
+
+	if rf.log[args.PrevLogIndex].Term != args.PrevLogTerm {
+		term := rf.log[args.PrevLogIndex].Term
+		for i := args.PrevLogIndex; i >= 0; i-- {
+			if rf.log[i].Term != term {
+				reply.XIndex = i + 1
+				break
+			}
+		}
 		return
 	}
 
@@ -121,7 +141,6 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		}
 	}
 
-	rf.resetElectionTimer()
 	reply.Success = true
 }
 
@@ -262,7 +281,11 @@ func (rf *Raft) broadcastAppendEntries() {
 				rf.nextIndex[i] = updatedNextIndex
 				rf.matchIndex[i] = rf.nextIndex[i] - 1
 			} else if !reply.Success {
-				rf.nextIndex[i]--
+				if reply.XLen >= 0 {
+					rf.nextIndex[i] = reply.XLen
+				} else {
+					rf.nextIndex[i] = reply.XIndex
+				}
 			}
 
 			rf.mu.Unlock()

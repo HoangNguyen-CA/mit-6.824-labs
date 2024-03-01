@@ -506,7 +506,6 @@ func TestBackup2B(t *testing.T) {
 	cfg.disconnect((leader1 + 2) % servers)
 	cfg.disconnect((leader1 + 3) % servers)
 	cfg.disconnect((leader1 + 4) % servers)
-	Debug(dInfo, "XXXXXXXXX servers %v, %v, %v disconnected", (leader1+2)%servers, (leader1+3)%servers, (leader1+4)%servers)
 
 	// submit lots of commands that won't commit
 	for i := 0; i < 50; i++ {
@@ -518,14 +517,10 @@ func TestBackup2B(t *testing.T) {
 	cfg.disconnect((leader1 + 0) % servers)
 	cfg.disconnect((leader1 + 1) % servers)
 
-	Debug(dInfo, "XXXXXXXXX servers %v, %v disconnected (cluster  1)", (leader1+0)%servers, (leader1+1)%servers)
-
 	// allow other partition to recover
 	cfg.connect((leader1 + 2) % servers)
 	cfg.connect((leader1 + 3) % servers)
 	cfg.connect((leader1 + 4) % servers)
-
-	Debug(dInfo, "XXXXXXXXX servers %v, %v, %v connected (cluster 2)", (leader1+2)%servers, (leader1+3)%servers, (leader1+4)%servers)
 
 	// lots of successful commands to new group.
 	for i := 0; i < 50; i++ {
@@ -539,7 +534,6 @@ func TestBackup2B(t *testing.T) {
 		other = (leader2 + 1) % servers
 	}
 	cfg.disconnect(other)
-	Debug(dInfo, "XXXXXXXXX server %v disconnected (cluster 2 now has only 2 members)", other)
 
 	// lots more commands that won't commit
 	for i := 0; i < 50; i++ {
@@ -555,7 +549,6 @@ func TestBackup2B(t *testing.T) {
 	cfg.connect((leader1 + 0) % servers)
 	cfg.connect((leader1 + 1) % servers)
 	cfg.connect(other)
-	Debug(dInfo, "XXXXXXXXX servers %v, %v, %v connected (cluster 1 and other)", (leader1+0)%servers, (leader1+1)%servers, other)
 
 	// lots of successful commands to new group.
 	for i := 0; i < 50; i++ {
@@ -567,7 +560,6 @@ func TestBackup2B(t *testing.T) {
 		cfg.connect(i)
 	}
 	cfg.one(rand.Int(), servers, true)
-	Debug(dInfo, "XXXXXXXXX all servers connected")
 
 	cfg.end()
 }
