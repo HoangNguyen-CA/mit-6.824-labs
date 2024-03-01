@@ -27,9 +27,9 @@ import (
 )
 
 const (
-	HeartbeatInterval  = 100 * time.Millisecond
-	ElectionTimeoutMin = 400
-	ElectionTimeoutMax = 800
+	HeartbeatInterval  = 200 * time.Millisecond
+	ElectionTimeoutMin = 350
+	ElectionTimeoutMax = 500
 )
 
 // as each Raft peer becomes aware that successive log entries are
@@ -259,6 +259,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	isLeader := rf.state == Leader
 
 	if isLeader {
+		Debug(dLog, "Server %v received command %v | term: %v, index: %v", rf.me, command, term, index)
 		rf.log = append(rf.log, LogEntry{Term: term, Index: index, Command: command})
 	}
 
