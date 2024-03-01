@@ -215,10 +215,7 @@ func (rf *Raft) broadcastAppendEntries() {
 		go func(i int) {
 			rf.mu.Lock()
 
-			if rf.state != Leader {
-				rf.mu.Unlock()
-				return
-			}
+			Debug(dAppend, "Server %v sending appendEntries to %v | nextIndex: %v, logLength: %v", rf.me, i, rf.nextIndex[i], len(rf.log))
 
 			//If last log index ≥ nextIndex for a follower: send AppendEntries RPC with log entries starting at nextIndex
 
@@ -227,8 +224,6 @@ func (rf *Raft) broadcastAppendEntries() {
 			if rf.nextIndex[i] < len(rf.log) {
 				entries = rf.log[rf.nextIndex[i]:]
 			}
-
-			Debug(dAppend, "Server %v sending appendEntries to %v | nextIndex: %v, logLength: %v", rf.me, i, rf.nextIndex[i], len(rf.log))
 
 			args := &AppendEntriesArgs{
 				Term:         rf.currentTerm,

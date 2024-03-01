@@ -3,26 +3,11 @@ package raft
 import (
 	"fmt"
 	"log"
-	"os"
-	"strconv"
 	"time"
 )
 
 // Debugging
 const debug = true
-
-func getVerbosity() int {
-	v := os.Getenv("VERBOSE")
-	level := 0
-	if v != "" {
-		var err error
-		level, err = strconv.Atoi(v)
-		if err != nil {
-			log.Fatalf("Invalid verbosity %v", v)
-		}
-	}
-	return level
-}
 
 type logTopic string
 
@@ -47,16 +32,16 @@ const (
 )
 
 var debugStart time.Time
-var debugVerbosity int
 
 func initDebug() {
-	debugVerbosity = getVerbosity()
 	debugStart = time.Now()
-
 	log.SetFlags(log.Flags() &^ (log.Ldate | log.Ltime))
 }
 
 func Debug(topic logTopic, format string, a ...interface{}) {
+	if debugStart == (time.Time{}) {
+		initDebug()
+	}
 	if debug {
 		time := time.Since(debugStart).Microseconds()
 		time /= 100

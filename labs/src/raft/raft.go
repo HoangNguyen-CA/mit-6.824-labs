@@ -286,6 +286,7 @@ func (rf *Raft) killed() bool {
 
 func (rf *Raft) ticker() {
 	for !rf.killed() {
+		time.Sleep(10 * time.Millisecond)
 
 		rf.mu.Lock()
 		state := rf.state
@@ -320,6 +321,8 @@ func (rf *Raft) ticker() {
 // for any long-running work.
 func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan ApplyMsg) *Raft {
 	rf := &Raft{}
+	rf.mu.Lock()
+
 	rf.peers = peers
 	rf.persister = persister
 	rf.me = me
@@ -345,12 +348,14 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	rf.state = Follower
 	rf.electionTimer = time.NewTimer(randElectionTimeout())
 
-	initDebug()
+	rf.mu.Unlock()
 
 	go rf.ticker()
 
 	go func() {
 		for !rf.killed() {
+			time.Sleep(10 * time.Millisecond)
+
 			rf.mu.Lock()
 			//If commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine (§5.3)
 
