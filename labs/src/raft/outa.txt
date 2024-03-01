@@ -1,0 +1,1353 @@
+Test (2A): initial election ...
+005035 VOTE Server 2 started election for term 1
+005048 VOTE Server 0 received requestVote | term: 1, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+005048 INFO Server 0 demoted to follower
+005049 VOTE Server 0 voted for 2
+005052 VOTE Server 1 received requestVote | term: 1, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+005053 INFO Server 1 demoted to follower
+005053 VOTE Server 1 voted for 2
+005054 INFO Server 2 promoted to leader
+005055 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+005056 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+005061 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+005063 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+006011 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+006020 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+006035 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+006045 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+007012 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+007017 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+007022 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+007027 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+008013 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+008017 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+008021 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+008025 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+009014 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+009022 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+009026 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+009030 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+010015 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+010024 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+010025 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+010031 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+011017 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+011020 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+011024 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+011027 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+012027 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+012039 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+012042 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+012048 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+013031 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+013039 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+013041 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+013048 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+014032 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+014036 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+014044 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+014048 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+015034 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+015041 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+015041 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+015045 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+016035 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+016040 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+016043 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+016048 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+017039 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+017047 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+017048 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+017055 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+018039 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+018043 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+018048 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+018052 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+019039 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+019046 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+019051 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+019056 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+020041 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+020043 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+020045 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+020048 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+021042 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+021047 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+021055 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+021058 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+022044 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+022050 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+022053 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+022056 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+023048 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+023055 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+023057 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+023061 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+024052 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+024059 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+024063 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+024068 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+025055 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+025060 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+025061 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+025064 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+026056 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+026065 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+026066 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+026070 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+027058 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+027063 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+027063 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+027067 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+028065 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+028072 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+028073 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+028079 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+029066 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+029070 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+029072 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+029077 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+030067 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+030074 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+030076 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+030081 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+031068 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+031072 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+031072 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+031078 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+032069 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+032078 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+032082 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+032087 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+033072 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+033078 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+033083 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+033086 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+034074 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+034080 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+034083 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+034088 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+035074 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+035079 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+035080 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+035086 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+  ... Passed --   3.5  3   64   17178    0
+Test (2A): election after network failure ...
+000946 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+000949 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+004192 VOTE Server 2 started election for term 1
+004199 VOTE Server 1 received requestVote | term: 1, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+004200 INFO Server 1 demoted to follower
+004200 VOTE Server 1 voted for 2
+004201 VOTE Server 0 received requestVote | term: 1, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+004202 INFO Server 0 demoted to follower
+004202 VOTE Server 0 voted for 2
+004203 INFO Server 2 promoted to leader
+004204 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+004206 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+004207 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+004209 APND Server 0 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+005017 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+005028 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+006019 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+006025 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+007021 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+007025 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+008042 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+008119 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+009042 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+009051 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+010044 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+010050 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+010841 VOTE Server 0 started election for term 2
+010848 VOTE Server 1 received requestVote | term: 2, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+010849 INFO Server 1 demoted to follower
+010849 VOTE Server 1 voted for 0
+010851 INFO Server 0 promoted to leader
+010853 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+010865 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+010869 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+011045 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+011045 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+011049 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+011054 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+011060 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+012045 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+012053 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+012053 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+012054 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+012067 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+013047 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+013050 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+013053 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+013057 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+013058 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+014048 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+014055 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+014055 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+014056 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+014057 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+015049 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+015052 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+015055 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+015056 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+015059 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+016050 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+016061 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+016063 APND Server 2 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+016063 INFO Server 2 demoted to follower
+016067 APND Server 1 received appendEntries | term: 1, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+016069 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+016073 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+017052 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+017056 APND Server 2 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+017057 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+017062 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+018053 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+018061 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+018059 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+018066 APND Server 2 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+019056 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+019059 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+019063 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+019065 APND Server 2 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+020056 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+020062 APND Server 1 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+020064 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+020069 APND Server 2 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+021056 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+021062 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+022060 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+022064 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+023061 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+023072 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+024065 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+024075 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+025074 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+025078 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+026077 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+026083 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+027077 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+027081 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+027937 VOTE Server 2 started election for term 3
+027945 VOTE Server 1 started election for term 3
+028079 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+028083 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+029079 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+029082 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+030080 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+030084 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+031083 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+031091 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+032086 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+032093 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+033088 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+033108 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+033329 VOTE Server 1 started election for term 4
+034091 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+034093 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+035092 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+035100 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+035468 VOTE Server 2 started election for term 4
+036094 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+036099 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+037094 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+037097 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+038096 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+038103 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+039097 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+039108 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+040098 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+040105 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+040962 VOTE Server 1 started election for term 5
+040972 VOTE Server 2 received requestVote | term: 5, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+040973 INFO Server 2 demoted to follower
+040973 VOTE Server 2 voted for 1
+040975 INFO Server 1 promoted to leader
+040977 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+040983 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+040986 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+041099 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+041100 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+041104 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+041107 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+041113 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+042096 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+042101 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+042103 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+042104 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+042108 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+043099 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+043105 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+043111 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+043116 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+043117 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+044101 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+044106 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+044114 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+044114 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+044116 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+045102 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+045107 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+045109 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+045115 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+045116 APND Server 0 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+046104 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+046120 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+046121 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+046124 APND Server 0 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+046128 APND Server 0 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+046129 INFO Server 0 demoted to follower
+046130 APND Server 2 received appendEntries | term: 2, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+047105 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+047111 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+047124 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+047128 APND Server 0 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+048106 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+048113 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+048118 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+048122 APND Server 0 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+049106 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+049108 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+049111 APND Server 0 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+049112 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+050110 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+050114 APND Server 2 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+050116 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+050121 APND Server 0 received appendEntries | term: 5, leaderId: 1, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+  ... Passed --   5.1  3  134   28860    0
+Test (2A): multiple elections ...
+000444 APND Server 1 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+000448 APND Server 1 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+005427 VOTE Server 5 started election for term 1
+005436 VOTE Server 6 received requestVote | term: 1, candidateId: 5, lastLogIndex: 0, lastLogTerm: 0
+005437 INFO Server 6 demoted to follower
+005437 VOTE Server 6 voted for 5
+005440 VOTE Server 0 received requestVote | term: 1, candidateId: 5, lastLogIndex: 0, lastLogTerm: 0
+005441 INFO Server 0 demoted to follower
+005441 VOTE Server 0 voted for 5
+005453 VOTE Server 4 received requestVote | term: 1, candidateId: 5, lastLogIndex: 0, lastLogTerm: 0
+005454 INFO Server 4 demoted to follower
+005454 VOTE Server 4 voted for 5
+005646 VOTE Server 2 received requestVote | term: 1, candidateId: 5, lastLogIndex: 0, lastLogTerm: 0
+005647 INFO Server 2 demoted to follower
+005648 VOTE Server 2 voted for 5
+005649 INFO Server 5 promoted to leader
+005650 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+005655 APND Server 6 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+005864 VOTE Server 3 received requestVote | term: 1, candidateId: 5, lastLogIndex: 0, lastLogTerm: 0
+005866 INFO Server 3 demoted to follower
+005866 VOTE Server 3 voted for 5
+006083 VOTE Server 1 received requestVote | term: 1, candidateId: 5, lastLogIndex: 0, lastLogTerm: 0
+006085 INFO Server 1 demoted to follower
+006086 VOTE Server 1 voted for 5
+006304 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+006524 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+006527 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+006529 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+006532 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+006534 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+006535 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+006543 APND Server 6 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+006545 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+006547 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+007068 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+007073 APND Server 2 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+007078 APND Server 0 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+007281 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+007283 APND Server 4 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+007280 APND Server 3 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+007505 APND Server 1 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+007736 APND Server 2 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+007837 APND Server 1 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+007939 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+007944 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+007946 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+007952 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+007954 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+007961 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+008152 APND Server 4 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+008153 APND Server 3 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+008152 APND Server 0 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+008155 APND Server 0 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+008158 APND Server 3 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+008165 APND Server 1 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+008578 APND Server 6 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+008804 APND Server 2 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+008915 APND Server 4 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+009455 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+009460 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+009461 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+010212 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+010315 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+010316 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+010747 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+010748 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+010750 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+010751 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+010751 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+010753 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+011737 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+011950 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+011953 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+011955 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+011956 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+011957 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+012705 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+013142 VOTE Server 3 started election for term 2
+013257 VOTE Server 1 received requestVote | term: 2, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+013258 INFO Server 1 demoted to follower
+013258 VOTE Server 1 voted for 3
+013261 VOTE Server 2 received requestVote | term: 2, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+013262 INFO Server 2 demoted to follower
+013262 VOTE Server 2 voted for 3
+013462 VOTE Server 4 started election for term 2
+013679 VOTE Server 0 received requestVote | term: 2, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+013681 INFO Server 0 demoted to follower
+013681 VOTE Server 0 voted for 3
+013897 INFO Server 3 promoted to leader
+013898 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+013899 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+013899 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+013898 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+013907 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+014118 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+014120 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+014122 APND Server 0 received appendEntries | term: 2, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+014225 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+014227 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+014229 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+014231 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+014437 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+014658 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+014660 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+014662 APND Server 1 received appendEntries | term: 2, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+014664 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+014666 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+014666 APND Server 2 received appendEntries | term: 2, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+014666 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+015319 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+015322 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+015323 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+015324 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+015325 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+015326 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+015651 VOTE Server 6 started election for term 2
+015863 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+015866 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+015868 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+015870 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+015871 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+015873 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+016077 APND Server 0 received appendEntries | term: 2, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+016082 APND Server 2 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+016501 VOTE Server 4 received requestVote | term: 2, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+016557 APND Server 4 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+016660 VOTE Server 0 received requestVote | term: 2, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+016662 APND Server 0 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+016937 APND Server 6 received appendEntries | term: 1, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+016944 INFO Server 5 demoted to follower
+017147 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+017151 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+017152 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+017153 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+017155 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+017156 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+017366 VOTE Server 5 received requestVote | term: 2, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+017367 VOTE Server 5 voted for 6
+017369 VOTE Server 5 started election for term 3
+017915 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+017920 VOTE Server 6 received requestVote | term: 3, candidateId: 5, lastLogIndex: 0, lastLogTerm: 0
+017921 INFO Server 6 demoted to follower
+017921 VOTE Server 6 voted for 5
+018027 VOTE Server 2 received requestVote | term: 2, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+018136 VOTE Server 0 received requestVote | term: 3, candidateId: 5, lastLogIndex: 0, lastLogTerm: 0
+018138 INFO Server 0 demoted to follower
+018138 VOTE Server 0 voted for 5
+018237 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+018240 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+018241 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+018242 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+018243 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+018676 VOTE Server 2 received requestVote | term: 3, candidateId: 5, lastLogIndex: 0, lastLogTerm: 0
+018677 INFO Server 2 demoted to follower
+018677 VOTE Server 2 voted for 5
+018988 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+019104 INFO Server 5 promoted to leader
+019105 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+019107 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+019109 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+019326 VOTE Server 4 received requestVote | term: 3, candidateId: 5, lastLogIndex: 0, lastLogTerm: 0
+019327 INFO Server 4 demoted to follower
+019327 VOTE Server 4 voted for 5
+019328 APND Server 0 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+019545 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+019547 APND Server 6 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+019553 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+019555 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+019557 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+019763 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+019765 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+019766 APND Server 2 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+019767 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+019768 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+019764 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+019986 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+019988 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+019989 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+019995 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+019997 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+020088 APND Server 4 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+020197 APND Server 4 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+020417 APND Server 0 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+020515 APND Server 2 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+020517 VOTE Server 1 started election for term 3
+020623 APND Server 6 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+020941 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+021040 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+021042 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+021043 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+021044 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+021046 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+021047 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+021249 APND Server 0 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+021344 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+021347 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+021349 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+021351 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+021352 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+021445 APND Server 2 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+021664 APND Server 4 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+022104 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+022760 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+022764 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+022765 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+022979 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+022983 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+022984 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+022981 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+022986 APND Server 0 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+022988 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+022990 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+022992 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+023199 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+023201 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+023209 APND Server 2 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+023411 APND Server 4 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+023412 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+023742 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+023940 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+023943 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+023944 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+024693 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+024696 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+024697 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+024698 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+024698 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+024698 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+024918 APND Server 0 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+025231 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+025750 VOTE Server 6 started election for term 4
+025749 APND Server 4 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+026174 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+026177 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+026178 APND Server 2 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+026391 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+026396 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+026397 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+026398 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+026399 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+026400 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+026601 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+026602 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+026604 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+026605 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+026605 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+026608 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+026817 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+026829 APND Server 0 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+026833 APND Server 6 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+026834 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+027240 APND Server 4 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+027240 APND Server 2 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+027240 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+027451 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+027453 VOTE Server 1 started election for term 4
+027454 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+027456 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+027457 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+027458 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+027459 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+028204 VOTE Server 4 received requestVote | term: 4, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+028205 INFO Server 4 demoted to follower
+028205 VOTE Server 4 voted for 1
+028208 VOTE Server 6 received requestVote | term: 4, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+028417 VOTE Server 0 received requestVote | term: 4, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+028418 INFO Server 0 demoted to follower
+028419 VOTE Server 0 voted for 1
+028634 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+028851 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+028855 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+028859 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+028862 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+028864 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+029284 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+029285 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+029285 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+029286 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+029289 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+029291 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+029827 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+029832 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+029834 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+029835 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+029836 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+029837 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+030156 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+030692 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+030693 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+030694 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+030694 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+030694 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+032193 VOTE Server 6 started election for term 5
+032523 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+032528 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+032530 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+032531 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+032534 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+032536 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+032962 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+032963 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+032964 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+032968 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+032968 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+032968 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+032969 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+033189 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+033192 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+033193 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+033195 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+033197 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+033839 VOTE Server 1 received requestVote | term: 5, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+033840 INFO Server 1 demoted to follower
+033841 VOTE Server 1 voted for 6
+033841 VOTE Server 0 received requestVote | term: 5, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+033841 INFO Server 0 demoted to follower
+033841 VOTE Server 0 voted for 6
+033947 VOTE Server 4 received requestVote | term: 5, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+033949 INFO Server 4 demoted to follower
+033949 VOTE Server 4 voted for 6
+034277 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+034282 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+034283 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+034284 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+034287 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+034289 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+034817 VOTE Server 2 started election for term 4
+035038 INFO Server 6 promoted to leader
+035040 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+035143 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+035144 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+035146 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+035147 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+035150 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+035151 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+035572 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+035781 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+035784 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+036003 APND Server 4 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+036624 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+036625 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+036626 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+036624 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+036628 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+036630 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+036631 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+036633 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+036843 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+036844 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+036954 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+036955 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+036955 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+036959 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+037057 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+037061 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+037063 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+037065 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+037067 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+037068 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+037280 APND Server 0 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+037491 APND Server 1 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+037710 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+037714 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+037717 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+037817 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+037820 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+037822 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+037823 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+037825 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+037826 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+037929 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+037930 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+038146 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+038149 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+038255 APND Server 1 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+038366 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+038368 APND Server 0 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+038586 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+038591 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+038596 APND Server 0 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+038806 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+038806 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+038809 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+038810 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+039025 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+039031 APND Server 1 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+039032 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+039036 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+039038 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+039039 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+039041 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+039046 APND Server 4 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+039245 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+039467 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+039470 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+039470 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+039672 APND Server 4 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+039676 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+039680 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+039901 APND Server 1 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+040334 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+040546 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+040750 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+040751 APND Server 0 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+040955 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+040963 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+040966 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+040967 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+041160 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+041162 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+041165 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+041160 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+041368 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+041371 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+041373 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+041375 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+041377 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+041378 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+041382 APND Server 4 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+041383 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+041584 APND Server 4 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+041682 APND Server 0 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+041692 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+041693 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+041694 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+041703 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+041709 APND Server 0 received appendEntries | term: 2, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+041712 APND Server 2 received appendEntries | term: 2, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+041715 APND Server 3 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+041715 INFO Server 3 demoted to follower
+042108 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+042111 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+042113 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+042115 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+042120 APND Server 2 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+042120 INFO Server 2 demoted to follower
+042128 APND Server 4 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+042129 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+042130 APND Server 4 received appendEntries | term: 2, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+042131 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+042132 VOTE Server 2 started election for term 6
+042136 APND Server 6 received appendEntries | term: 2, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+042435 APND Server 2 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+042439 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+042539 VOTE Server 6 received requestVote | term: 6, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+042540 INFO Server 6 demoted to follower
+042540 VOTE Server 6 voted for 2
+042542 VOTE Server 3 received requestVote | term: 6, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+042542 INFO Server 3 demoted to follower
+042543 VOTE Server 3 voted for 2
+042545 APND Server 0 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+042547 APND Server 0 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+042749 VOTE Server 0 received requestVote | term: 6, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+042751 INFO Server 0 demoted to follower
+042757 APND Server 3 received appendEntries | term: 5, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+042757 VOTE Server 4 received requestVote | term: 6, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+042759 INFO Server 4 demoted to follower
+042759 VOTE Server 4 voted for 2
+042753 VOTE Server 0 voted for 2
+042751 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+042969 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+042976 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+043176 INFO Server 2 promoted to leader
+043178 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+043181 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+043182 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+043392 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+043610 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+043613 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+043613 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+043611 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+043615 APND Server 0 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+043619 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+043830 APND Server 3 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+043832 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+043833 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+043835 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+043837 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+043839 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+044047 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+044047 APND Server 4 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+044269 APND Server 6 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+044271 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+044273 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+044485 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+044487 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+044488 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+044489 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+044493 APND Server 4 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+044704 APND Server 0 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+044708 APND Server 3 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+045135 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+045458 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+045776 APND Server 6 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+046104 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+046106 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+046107 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+046533 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+046867 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+046873 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+046875 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+046877 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+046879 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+046885 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+046890 APND Server 3 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+046895 APND Server 4 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+047192 APND Server 0 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+047418 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+047419 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+047421 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+047423 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+047425 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+047425 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+048169 APND Server 6 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+048272 VOTE Server 1 started election for term 6
+048272 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+048277 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+048279 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+048281 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+048283 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+048291 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+048296 VOTE Server 3 received requestVote | term: 6, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+048487 VOTE Server 6 received requestVote | term: 6, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+049022 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+049025 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+049026 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+049028 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+049029 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+049241 VOTE Server 0 received requestVote | term: 6, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+049241 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+049672 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+049674 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+049675 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+049677 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+049678 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+049887 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+049891 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+049893 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+049895 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+049896 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+049898 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+050547 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+050975 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+050978 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+050980 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+050981 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+050983 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+050984 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+052047 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+052571 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+052573 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+052573 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+052579 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+052580 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+052580 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+053217 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+053441 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+053443 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+053446 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+053447 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+053639 VOTE Server 4 started election for term 7
+053842 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+054359 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+054359 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+054364 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+054366 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+054366 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+054368 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+054370 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+054372 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+054373 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+054795 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+054799 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+055125 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+055130 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+055134 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+055136 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+055139 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+055140 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+055229 VOTE Server 3 started election for term 7
+055332 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+055334 VOTE Server 0 started election for term 7
+055335 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+055337 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+055338 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+055340 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+055341 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+055435 VOTE Server 6 started election for term 7
+055557 VOTE Server 3 received requestVote | term: 7, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+055564 VOTE Server 6 received requestVote | term: 7, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+055568 VOTE Server 0 received requestVote | term: 7, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+055570 VOTE Server 0 received requestVote | term: 7, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+055577 VOTE Server 3 received requestVote | term: 7, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+055766 VOTE Server 6 received requestVote | term: 7, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+056181 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+056187 VOTE Server 1 received requestVote | term: 7, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+056188 INFO Server 1 demoted to follower
+056188 VOTE Server 1 voted for 3
+056386 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+056389 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+056390 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+056391 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+056392 VOTE Server 1 received requestVote | term: 7, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+056603 VOTE Server 1 received requestVote | term: 7, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+056815 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+056819 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+056821 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+056822 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+056824 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+056825 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+057028 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+057872 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+057875 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+057876 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+057880 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+057881 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+057883 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+057928 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+058299 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+058303 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+058306 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+058309 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+058311 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+059153 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+059158 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+059159 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+059161 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+059162 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+059163 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+059771 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+059773 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+059774 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+059775 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+059781 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+059783 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+060205 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+060206 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+060638 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+060642 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+060644 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+060647 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+060649 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+061146 VOTE Server 0 started election for term 8
+061248 VOTE Server 3 started election for term 8
+061249 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+061251 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+061253 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+061254 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+061256 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+061258 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+061457 VOTE Server 1 received requestVote | term: 8, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+061458 INFO Server 1 demoted to follower
+061458 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+061459 VOTE Server 0 received requestVote | term: 8, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+061461 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+061463 VOTE Server 6 received requestVote | term: 8, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+061463 INFO Server 6 demoted to follower
+061464 VOTE Server 6 voted for 3
+061459 VOTE Server 1 voted for 0
+061464 VOTE Server 3 received requestVote | term: 8, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+061463 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+061661 VOTE Server 6 received requestVote | term: 8, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+061663 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+061666 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+061667 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+061668 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+061670 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+061671 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+061672 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+061673 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+061761 VOTE Server 1 received requestVote | term: 8, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+061865 VOTE Server 4 started election for term 8
+063053 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+063474 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+063477 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+063478 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+063480 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+063481 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+064005 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+064007 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+064011 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+064013 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+064015 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+064017 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+065179 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+065181 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+065183 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+065185 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+065188 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+065190 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+065602 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+065604 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+065607 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+065610 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+065611 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+065613 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+065820 VOTE Server 0 started election for term 9
+066043 VOTE Server 3 received requestVote | term: 9, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+066044 INFO Server 3 demoted to follower
+066045 VOTE Server 3 voted for 0
+066264 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+066267 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+066268 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+066270 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+066272 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+066273 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+066930 VOTE Server 1 received requestVote | term: 9, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+066932 INFO Server 1 demoted to follower
+066932 VOTE Server 1 voted for 0
+066939 VOTE Server 6 received requestVote | term: 9, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+066940 INFO Server 6 demoted to follower
+066940 VOTE Server 6 voted for 0
+067253 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+067254 INFO Server 0 promoted to leader
+067256 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+067255 APND Server 0 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+067258 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+067258 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+067259 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+067260 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+067262 VOTE Server 6 started election for term 10
+067683 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+068224 APND Server 0 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+068435 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+068438 APND Server 6 received appendEntries | term: 9, leaderId: 0, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+068441 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+068443 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+068444 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+068446 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+068447 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+068754 INFO Server 0 demoted to follower
+068857 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+068858 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+068860 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+068860 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+068860 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+068863 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+068865 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+068866 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+068867 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+068868 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+068870 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+068964 VOTE Server 1 received requestVote | term: 10, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+068965 INFO Server 1 demoted to follower
+068965 VOTE Server 1 voted for 6
+069382 VOTE Server 3 received requestVote | term: 10, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+069383 INFO Server 3 demoted to follower
+069383 VOTE Server 3 voted for 6
+069587 VOTE Server 0 received requestVote | term: 10, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+069592 VOTE Server 0 voted for 6
+070466 VOTE Server 4 started election for term 9
+070466 INFO Server 6 promoted to leader
+070686 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+070687 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+070689 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+070690 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+070691 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+070691 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+070693 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+070905 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+070907 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+071013 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+071019 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+071021 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+071013 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+071026 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+071034 APND Server 1 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+071038 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+071040 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+071041 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+071043 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+071045 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+071048 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+071050 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+071052 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+071063 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+071065 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+071121 APND Server 3 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+071443 INFO Server 2 demoted to follower
+071651 VOTE Server 3 received requestVote | term: 9, candidateId: 4, lastLogIndex: 0, lastLogTerm: 0
+071852 VOTE Server 2 started election for term 11
+071858 VOTE Server 1 received requestVote | term: 9, candidateId: 4, lastLogIndex: 0, lastLogTerm: 0
+071860 VOTE Server 2 received requestVote | term: 9, candidateId: 4, lastLogIndex: 0, lastLogTerm: 0
+071873 VOTE Server 1 received requestVote | term: 11, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+071874 INFO Server 1 demoted to follower
+071874 VOTE Server 1 voted for 2
+072069 VOTE Server 3 received requestVote | term: 11, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+072070 INFO Server 3 demoted to follower
+072071 VOTE Server 3 voted for 2
+072073 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+072075 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+072077 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+072078 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+072080 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+072081 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+072069 APND Server 4 received appendEntries | term: 6, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+072517 INFO Server 4 demoted to follower
+072518 INFO Server 4 demoted to follower
+072518 VOTE Server 4 received requestVote | term: 11, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+072519 VOTE Server 4 voted for 2
+073170 INFO Server 2 promoted to leader
+073172 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+073387 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+073390 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+073392 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+073393 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+073395 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+073401 APND Server 3 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+073824 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+073827 APND Server 1 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+073932 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+073936 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+073939 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+073941 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+073942 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+073944 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+074463 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+074467 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+074470 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+074471 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+074473 APND Server 4 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+074671 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+074892 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+074895 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+074897 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+074899 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+074900 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+074902 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+074904 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+075109 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+075219 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+075328 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+075330 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+075332 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+075334 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+075438 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+075553 APND Server 3 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+075561 APND Server 4 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+075658 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+075663 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+075665 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+075666 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+075771 APND Server 1 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+076300 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+076303 APND Server 5 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+076305 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+076306 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+076307 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+076308 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+077487 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+077487 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+077704 APND Server 6 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+077706 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+077916 APND Server 6 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+077921 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+077921 APND Server 6 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+077924 APND Server 6 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+078135 APND Server 5 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+078139 APND Server 2 received appendEntries | term: 10, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+078135 VOTE Server 0 started election for term 11
+078353 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+078902 APND Server 5 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+078905 APND Server 5 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+078907 APND Server 5 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+078908 APND Server 5 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+078911 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+078913 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+078915 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+079011 APND Server 6 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+079120 APND Server 1 received appendEntries | term: 10, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+079121 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+079121 APND Server 1 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+079126 APND Server 1 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+079229 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+079235 APND Server 6 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+079236 APND Server 6 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+079236 INFO Server 6 demoted to follower
+079236 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+079238 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+079239 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+079241 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+079242 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+079661 APND Server 5 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+079663 INFO Server 5 demoted to follower
+079666 APND Server 1 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+079670 APND Server 2 received appendEntries | term: 10, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+079674 APND Server 5 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+079678 APND Server 2 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+079874 APND Server 6 received appendEntries | term: 3, leaderId: 5, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+079875 APND Server 6 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+080093 APND Server 5 received appendEntries | term: 10, leaderId: 6, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+080312 VOTE Server 3 started election for term 12
+080323 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+080535 APND Server 6 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+080969 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+080970 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+081428 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+081429 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+081430 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+082042 APND Server 1 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+082488 APND Server 5 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+082489 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+082914 VOTE Server 4 started election for term 12
+083351 VOTE Server 0 started election for term 12
+083878 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+083879 APND Server 5 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+083881 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+083884 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+083884 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+083888 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+083893 APND Server 6 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+084101 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+084103 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+084319 APND Server 3 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+084322 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+084327 INFO Server 2 demoted to follower
+084533 VOTE Server 2 started election for term 13
+084746 APND Server 1 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+084749 APND Server 0 received appendEntries | term: 11, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+084754 VOTE Server 2 received requestVote | term: 12, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+084961 VOTE Server 3 received requestVote | term: 12, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+084970 VOTE Server 3 received requestVote | term: 13, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+084970 INFO Server 3 demoted to follower
+084971 VOTE Server 3 voted for 2
+085495 VOTE Server 4 received requestVote | term: 13, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+085496 INFO Server 4 demoted to follower
+085497 VOTE Server 4 voted for 2
+085498 VOTE Server 4 received requestVote | term: 12, candidateId: 0, lastLogIndex: 0, lastLogTerm: 0
+085714 INFO Server 0 demoted to follower
+085715 VOTE Server 0 received requestVote | term: 13, candidateId: 2, lastLogIndex: 0, lastLogTerm: 0
+085715 VOTE Server 0 voted for 2
+085718 INFO Server 2 promoted to leader
+085718 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+086153 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+086157 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+086160 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+086575 APND Server 3 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+086787 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+087003 APND Server 4 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+087647 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+087649 APND Server 0 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+087875 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+088091 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+088092 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+088094 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+088098 APND Server 4 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+088099 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+088305 APND Server 3 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+088307 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+088526 APND Server 0 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+090147 VOTE Server 1 started election for term 12
+090471 VOTE Server 6 received requestVote | term: 12, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+090472 INFO Server 6 demoted to follower
+090473 VOTE Server 6 voted for 1
+090475 VOTE Server 6 started election for term 13
+090480 VOTE Server 3 received requestVote | term: 13, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+090793 VOTE Server 1 received requestVote | term: 13, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+090794 INFO Server 1 demoted to follower
+090794 VOTE Server 1 voted for 6
+091003 VOTE Server 0 received requestVote | term: 13, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+091019 VOTE Server 2 received requestVote | term: 13, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+091024 VOTE Server 4 received requestVote | term: 13, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+091025 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+091030 VOTE Server 4 received requestVote | term: 13, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+091439 VOTE Server 5 received requestVote | term: 13, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+091441 INFO Server 5 demoted to follower
+091441 VOTE Server 5 voted for 6
+091444 APND Server 0 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+091878 VOTE Server 5 received requestVote | term: 13, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+091877 VOTE Server 2 received requestVote | term: 13, candidateId: 6, lastLogIndex: 0, lastLogTerm: 0
+091881 VOTE Server 0 received requestVote | term: 13, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+091881 VOTE Server 3 received requestVote | term: 13, candidateId: 1, lastLogIndex: 0, lastLogTerm: 0
+092097 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+092101 APND Server 2 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+092102 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+092104 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+092105 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+092106 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+092107 APND Server 2 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+092109 APND Server 2 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+092110 APND Server 2 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+092114 APND Server 0 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+092310 APND Server 2 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+092316 APND Server 4 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+092319 APND Server 1 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+092321 APND Server 4 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+092322 APND Server 2 sending appendEntries to 3 | nextIndex: 1, logLength: 1
+092325 APND Server 1 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+092747 APND Server 5 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+092751 APND Server 6 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+092751 INFO Server 6 demoted to follower
+092751 APND Server 3 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+093086 APND Server 6 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+092751 APND Server 5 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+093519 VOTE Server 3 started election for term 14
+093530 APND Server 3 received appendEntries | term: 13, leaderId: 2, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+093957 INFO Server 2 demoted to follower
+093960 VOTE Server 2 received requestVote | term: 14, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+093961 VOTE Server 2 voted for 3
+094395 VOTE Server 0 received requestVote | term: 14, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+094396 INFO Server 0 demoted to follower
+094397 VOTE Server 0 voted for 3
+094835 VOTE Server 5 received requestVote | term: 14, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+094836 INFO Server 5 demoted to follower
+094836 VOTE Server 5 voted for 3
+095260 VOTE Server 4 received requestVote | term: 14, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+095262 INFO Server 4 demoted to follower
+095262 VOTE Server 4 voted for 3
+095261 VOTE Server 6 received requestVote | term: 14, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+095262 INFO Server 6 demoted to follower
+095263 VOTE Server 6 voted for 3
+095471 INFO Server 3 promoted to leader
+095472 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+095695 APND Server 6 received appendEntries | term: 14, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+095911 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+095911 VOTE Server 1 received requestVote | term: 14, candidateId: 3, lastLogIndex: 0, lastLogTerm: 0
+095914 INFO Server 1 demoted to follower
+095915 VOTE Server 1 voted for 3
+095915 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+095917 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+  ... Passed --   9.6  7  846  168948    0
+095923 APND Server 0 received appendEntries | term: 14, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+095924 APND Server 5 received appendEntries | term: 14, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+095925 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+095926 APND Server 4 received appendEntries | term: 14, leaderId: 3, prevLogIndex: 0, prevLogTerm: 0, leaderCommit: 0, entries: 0
+PASS
+095927 APND Server 3 sending appendEntries to 6 | nextIndex: 1, logLength: 1
+095927 APND Server 3 sending appendEntries to 4 | nextIndex: 1, logLength: 1
+095928 APND Server 3 sending appendEntries to 0 | nextIndex: 1, logLength: 1
+095929 APND Server 3 sending appendEntries to 5 | nextIndex: 1, logLength: 1
+095930 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+095931 APND Server 3 sending appendEntries to 1 | nextIndex: 1, logLength: 1
+095932 APND Server 3 sending appendEntries to 2 | nextIndex: 1, logLength: 1
+ok  	6.824/raft	19.269s

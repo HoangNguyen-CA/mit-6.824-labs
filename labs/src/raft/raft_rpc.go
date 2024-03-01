@@ -82,7 +82,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 
-	Debug(dAppend, "Server %v received appendEntries | term: %v, leaderId: %v, prevLogIndex: %v, prevLogTerm: %v, leaderCommit: %v, entries: %v", rf.me, args.Term, args.LeaderId, args.PrevLogIndex, args.PrevLogTerm, args.LeaderCommit, args.Entries)
+	Debug(dAppend, "Server %v received appendEntries | term: %v, leaderId: %v, prevLogIndex: %v, prevLogTerm: %v, leaderCommit: %v, entries: %v", rf.me, args.Term, args.LeaderId, args.PrevLogIndex, args.PrevLogTerm, args.LeaderCommit, len(args.Entries))
 
 	reply.Term = rf.currentTerm
 	reply.Success = false
@@ -222,11 +222,19 @@ func (rf *Raft) broadcastAppendEntries() {
 
 			//If last log index ≥ nextIndex for a follower: send AppendEntries RPC with log entries starting at nextIndex
 
+			reqNextIndex := rf.nextIndex[i]
+			var entries []LogEntry
+			if rf.nextIndex[i] < len(rf.log) {
+				entries = rf.log[rf.nextIndex[i]:]
+			}
+
+			Debug(dAppend, "Server %v sending appendEntries to %v | nextIndex: %v, logLength: %v", rf.me, i, rf.nextIndex[i], len(rf.log))
+
 			args := &AppendEntriesArgs{
 				Term:         rf.currentTerm,
 				LeaderId:     rf.me,
 				PrevLogIndex: rf.nextIndex[i] - 1,
-				Entries:      rf.log[rf.nextIndex[i]:],
+				Entries:      entries,
 				PrevLogTerm:  rf.log[rf.nextIndex[i]-1].Term,
 				LeaderCommit: rf.commitIndex,
 			}
@@ -247,10 +255,18 @@ func (rf *Raft) broadcastAppendEntries() {
 			//If successful: update nextIndex and matchIndex for follower (§5.3)
 			//If AppendEntries fails because of log inconsistency: decrement nextIndex and retry (§5.3)
 
-			if reply.Success {
-				rf.nextIndex[i] += len(args.Entries)
+			// if reply.Success {
+			// 	rf.nextIndex[i] = reqNextIndex + len(entries)
+			// 	rf.matchIndex[i] = rf.nextIndex[i] - 1
+			// } else {
+			// 	rf.nextIndex[i]--
+			// }
+
+			updatedNextIndex := reqNextIndex + len(entries)
+			if reply.Success && updatedNextIndex > rf.nextIndex[i] {
+				rf.nextIndex[i] = updatedNextIndex
 				rf.matchIndex[i] = rf.nextIndex[i] - 1
-			} else {
+			} else if !reply.Success {
 				rf.nextIndex[i]--
 			}
 
