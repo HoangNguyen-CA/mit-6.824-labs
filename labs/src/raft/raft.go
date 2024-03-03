@@ -208,10 +208,6 @@ func (rf *Raft) persist() {
 // restore previously persisted state.
 func (rf *Raft) readPersist(data []byte) {
 	if data == nil || len(data) < 1 { // bootstrap without any state?
-		rf.currentTerm = 0
-		rf.votedFor = -1
-		rf.log = make([]LogEntry, 1)
-		rf.log[0] = LogEntry{Term: 0, Index: 0, Command: nil}
 		return
 	}
 	// Your code here (2C).
@@ -344,6 +340,12 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	// Your initialization code here (2A, 2B, 2C)
 
 	//persistent state
+	rf.currentTerm = 0
+	rf.votedFor = -1
+	rf.log = make([]LogEntry, 1)
+	rf.log[0] = LogEntry{Term: 0, Index: 0, Command: nil}
+
+	// initialize from state persisted before a crash
 	rf.readPersist(persister.ReadRaftState())
 
 	//volatile state
@@ -412,9 +414,6 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 			rf.mu.Unlock()
 		}
 	}()
-
-	// initialize from state persisted before a crash
-	rf.readPersist(persister.ReadRaftState())
 
 	return rf
 }
