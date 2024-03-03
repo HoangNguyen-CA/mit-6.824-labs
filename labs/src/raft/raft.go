@@ -166,13 +166,13 @@ func (rf *Raft) convertToCandidate() {
 		rf.mu.Unlock()
 		return
 	}
+	Debug(dVote, "Server %v started election for term %v", rf.me, rf.currentTerm+1)
 	rf.state = Candidate
 	rf.currentTerm++
 	rf.votedFor = rf.me
 	rf.votes = 1
-	rf.persist()
 	rf.resetElectionTimer()
-	Debug(dVote, "Server %v started election for term %v", rf.me, rf.currentTerm)
+	rf.persist()
 	rf.mu.Unlock()
 
 	rf.broadcastRequestVotes()

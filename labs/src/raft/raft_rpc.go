@@ -77,9 +77,9 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	if canVote {
 		Debug(dVote, "Server %v voted for %v", rf.me, args.CandidateId)
 		rf.votedFor = args.CandidateId
-		rf.persist()
 		reply.VoteGranted = true
 		rf.resetElectionTimer()
+		rf.persist()
 	}
 }
 
@@ -114,7 +114,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	if rf.log[args.PrevLogIndex].Term != args.PrevLogTerm {
 		term := rf.log[args.PrevLogIndex].Term
 		for i := args.PrevLogIndex; i >= 0; i-- {
-			if rf.log[i].Term != term {
+			if rf.log[i].Term != term || i == 0 {
 				reply.XIndex = i + 1
 				break
 			}
@@ -283,7 +283,8 @@ func (rf *Raft) broadcastAppendEntries() {
 			if reply.Success && updatedNextIndex > rf.nextIndex[i] {
 				rf.nextIndex[i] = updatedNextIndex
 				rf.matchIndex[i] = rf.nextIndex[i] - 1
-			} else if !reply.Success {
+			} else if !reply.Success && (reply.XIndex >= 1 || reply.XLen >= 1) {
+				Debug(dAppend, "Server %v appendEntries to %v failed | xIndex: %v, xLen: %v", rf.me, i, reply.XIndex, reply.XLen)
 				if reply.XLen >= 0 {
 					rf.nextIndex[i] = reply.XLen
 				} else {
