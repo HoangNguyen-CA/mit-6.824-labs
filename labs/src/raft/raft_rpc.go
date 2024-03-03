@@ -77,6 +77,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	if canVote {
 		Debug(dVote, "Server %v voted for %v", rf.me, args.CandidateId)
 		rf.votedFor = args.CandidateId
+		rf.persist()
 		reply.VoteGranted = true
 		rf.resetElectionTimer()
 	}
@@ -131,6 +132,8 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 			rf.log = append(rf.log, entry)
 		}
 	}
+
+	rf.persist()
 
 	//5. If leaderCommit > commitIndex, set commitIndex = min(leaderCommit, index of last new entry)
 	if args.LeaderCommit > rf.commitIndex {
