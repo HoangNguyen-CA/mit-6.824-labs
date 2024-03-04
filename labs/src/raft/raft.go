@@ -294,32 +294,6 @@ func (rf *Raft) killed() bool {
 	return z == 1
 }
 
-func (rf *Raft) ticker() {
-	for !rf.killed() {
-		time.Sleep(10 * time.Millisecond)
-
-		rf.mu.Lock()
-		state := rf.state
-
-		rf.mu.Unlock()
-
-		switch state {
-		case Follower:
-			select {
-			case <-rf.electionTimer.C:
-				go rf.convertToCandidate()
-			default:
-			}
-		case Candidate:
-			select {
-			case <-rf.electionTimer.C:
-				go rf.convertToCandidate()
-			default:
-			}
-		}
-	}
-}
-
 // the service or tester wants to create a Raft server. the ports
 // of all the Raft servers (including this one) are in peers[]. this
 // server's port is peers[me]. all the servers' peers[] arrays
@@ -364,7 +338,39 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 
 	rf.mu.Unlock()
 
-	go rf.ticker()
+	go func() {
+		for !rf.killed() {
+			time.Sleep(10 * time.Millisecond)
+
+			select {
+			case <-rf.electionTimer.C:
+				rf.mu.Lock()
+				if rf.state != Leader {
+					go rf.convertToCandidate()
+				}
+				rf.mu.Unlock()
+			default:
+			}
+		}
+	}()
+
+	go func() {
+		for !rf.killed() {
+			time.Sleep(10 * time.Millisecond)
+
+			rf.mu.Lock()
+			if rf.commitIndex > rf.lastApplied {
+				rf.lastApplied++
+				entry := rf.log[rf.lastApplied]
+
+				rf.mu.Unlock()
+				applyMsg := ApplyMsg{CommandValid: true, Command: entry.Command, CommandIndex: entry.Index}
+				rf.applyCh <- applyMsg
+				continue
+			}
+			rf.mu.Unlock()
+		}
+	}()
 
 	go func() {
 		for !rf.killed() {
@@ -373,16 +379,8 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 			rf.mu.Lock()
 			//If commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine (§5.3)
 
-			if rf.commitIndex > rf.lastApplied {
-				rf.lastApplied++
-				entry := rf.log[rf.lastApplied]
-				applyMsg := ApplyMsg{CommandValid: true, Command: entry.Command, CommandIndex: entry.Index}
-				rf.applyCh <- applyMsg
-			}
-
 			if rf.state == Leader {
 				//If there exists an N such that N > commitIndex, a majority of matchIndex[i] ≥ N, and log[N].term == currentTerm: set commitIndex = N (§5.3, §5.4)
-
 				for N := len(rf.log) - 1; N > rf.commitIndex; N-- {
 					count := 1
 					for i := range rf.peers {

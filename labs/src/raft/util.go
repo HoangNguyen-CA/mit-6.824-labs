@@ -36,9 +36,7 @@ var debugStart = time.Now()
 // log.SetFlags(log.Flags() &^ (log.Ldate | log.Ltime))
 
 func Debug(topic logTopic, format string, a ...interface{}) {
-	// if debugStart == (time.Time{}) {
-	// 	initDebug()
-	// }
+
 	if debug {
 		time := time.Since(debugStart).Microseconds()
 		time /= 100
