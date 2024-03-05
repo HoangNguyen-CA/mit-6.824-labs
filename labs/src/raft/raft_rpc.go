@@ -224,32 +224,34 @@ func (rf *Raft) broadcastAppendEntries() {
 			continue
 		}
 
-		go func(i int) {
+		go func(p int) {
 			rf.mu.Lock()
 
-			Debug(dAppend, "Server %v sending appendEntries to %v | nextIndex: %v, logLength: %v", rf.me, i, rf.nextIndex[i], len(rf.log))
+			Debug(dAppend, "Server %v sending appendEntries to %v | nextIndex: %v, logLength: %v", rf.me, p, rf.nextIndex[p], len(rf.log))
 
 			//If last log index ≥ nextIndex for a follower: send AppendEntries RPC with log entries starting at nextIndex
 
-			reqNextIndex := rf.nextIndex[i]
+			reqNextIndex := rf.nextIndex[p]
 			var entries []LogEntry
-			if rf.nextIndex[i] < len(rf.log) {
-				entries = rf.log[rf.nextIndex[i]:]
+			if rf.nextIndex[p] < len(rf.log) {
+				temp := rf.log[rf.nextIndex[p]:]
+				entries = make([]LogEntry, len(temp))
+				copy(entries, temp)
 			}
 
 			args := &AppendEntriesArgs{
 				Term:         rf.currentTerm,
 				LeaderId:     rf.me,
-				PrevLogIndex: rf.nextIndex[i] - 1,
+				PrevLogIndex: rf.nextIndex[p] - 1,
 				Entries:      entries,
-				PrevLogTerm:  rf.log[rf.nextIndex[i]-1].Term,
+				PrevLogTerm:  rf.log[rf.nextIndex[p]-1].Term,
 				LeaderCommit: rf.commitIndex,
 			}
 
 			rf.mu.Unlock()
 
 			reply := &AppendEntriesReply{}
-			ok := rf.peers[i].Call("Raft.AppendEntries", args, reply)
+			ok := rf.peers[p].Call("Raft.AppendEntries", args, reply)
 			if !ok {
 				return
 			}
@@ -270,15 +272,15 @@ func (rf *Raft) broadcastAppendEntries() {
 			// }
 
 			updatedNextIndex := reqNextIndex + len(entries)
-			if reply.Success && updatedNextIndex > rf.nextIndex[i] {
-				rf.nextIndex[i] = updatedNextIndex
-				rf.matchIndex[i] = rf.nextIndex[i] - 1
+			if reply.Success && updatedNextIndex > rf.nextIndex[p] {
+				rf.nextIndex[p] = updatedNextIndex
+				rf.matchIndex[p] = rf.nextIndex[p] - 1
 			} else if !reply.Success && (reply.XIndex >= 1 || reply.XLen >= 1) {
-				Debug(dAppend, "Server %v appendEntries to %v failed | xIndex: %v, xLen: %v", rf.me, i, reply.XIndex, reply.XLen)
+				Debug(dAppend, "Server %v appendEntries to %v failed | xIndex: %v, xLen: %v", rf.me, p, reply.XIndex, reply.XLen)
 				if reply.XLen >= 0 {
-					rf.nextIndex[i] = reply.XLen
+					rf.nextIndex[p] = reply.XLen
 				} else {
-					rf.nextIndex[i] = reply.XIndex
+					rf.nextIndex[p] = reply.XIndex
 				}
 			}
 
