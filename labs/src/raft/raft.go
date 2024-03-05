@@ -96,10 +96,12 @@ type Raft struct {
 	matchIndex []int
 
 	//extra state
-	votes         int
-	state         State
-	electionTimer *time.Timer
-	applyCh       chan ApplyMsg
+	votes   int
+	state   State
+	applyCh chan ApplyMsg
+
+	lastHeartbeat time.Time
+	timeoutDelay  time.Duration
 }
 
 // returns a random election timeout between ElectionTimeoutMin and ElectionTimeoutMax
@@ -113,13 +115,8 @@ func randElectionTimeout() time.Duration {
 // (3) converting to candidate (and starting election).
 // requires lock
 func (rf *Raft) resetElectionTimer() {
-	if !rf.electionTimer.Stop() {
-		select {
-		case <-rf.electionTimer.C:
-		default:
-		}
-	}
-	rf.electionTimer.Reset(randElectionTimeout())
+	rf.lastHeartbeat = time.Now()
+	rf.timeoutDelay = randElectionTimeout()
 }
 
 // demote to follower and reset votedFor state. should only be called when:
@@ -334,7 +331,8 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	rf.votes = 0
 	rf.applyCh = applyCh
 	rf.state = Follower
-	rf.electionTimer = time.NewTimer(randElectionTimeout())
+	rf.lastHeartbeat = time.Now()
+	rf.timeoutDelay = randElectionTimeout()
 
 	rf.mu.Unlock()
 
@@ -342,15 +340,14 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 		for !rf.killed() {
 			time.Sleep(10 * time.Millisecond)
 
-			select {
-			case <-rf.electionTimer.C:
-				rf.mu.Lock()
+			rf.mu.Lock()
+			if time.Since(rf.lastHeartbeat) > rf.timeoutDelay {
 				if rf.state != Leader {
 					go rf.convertToCandidate()
 				}
-				rf.mu.Unlock()
-			default:
+				rf.resetElectionTimer()
 			}
+			rf.mu.Unlock()
 		}
 	}()
 

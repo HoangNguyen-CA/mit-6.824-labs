@@ -1,3 +1,0 @@
-Test (2C): basic persistence ...
-signal: interrupt
-FAIL	6.824/raft	3.396s

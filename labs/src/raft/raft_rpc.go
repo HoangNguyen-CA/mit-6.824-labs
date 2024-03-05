@@ -128,8 +128,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		if entry.Index >= len(rf.log) {
 			rf.log = append(rf.log, entry)
 		} else if rf.log[entry.Index].Term != entry.Term {
-			rf.log = rf.log[:entry.Index]
-			rf.log = append(rf.log, entry)
+			rf.log = append(rf.log[:entry.Index], entry)
 		}
 	}
 
@@ -174,16 +173,6 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 // capitalized all field names in structs passed over RPC, and
 // that the caller passes the address of the reply struct with &, not
 // the struct itself.
-func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *RequestVoteReply) bool {
-	ok := rf.peers[server].Call("Raft.RequestVote", args, reply)
-	return ok
-}
-
-func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *AppendEntriesReply) bool {
-	ok := rf.peers[server].Call("Raft.AppendEntries", args, reply)
-	return ok
-}
-
 func (rf *Raft) broadcastRequestVotes() {
 	for i := range rf.peers {
 		if i == rf.me {
@@ -203,7 +192,8 @@ func (rf *Raft) broadcastRequestVotes() {
 			rf.mu.Unlock()
 
 			reply := &RequestVoteReply{}
-			ok := rf.sendRequestVote(p, args, reply)
+			ok := rf.peers[p].Call("Raft.RequestVote", args, reply)
+
 			if !ok {
 				return
 			}
@@ -259,7 +249,7 @@ func (rf *Raft) broadcastAppendEntries() {
 			rf.mu.Unlock()
 
 			reply := &AppendEntriesReply{}
-			ok := rf.sendAppendEntries(i, args, reply)
+			ok := rf.peers[i].Call("Raft.AppendEntries", args, reply)
 			if !ok {
 				return
 			}
