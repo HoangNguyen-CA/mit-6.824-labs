@@ -85,7 +85,7 @@ type Raft struct {
 	// persistant state
 	currentTerm int
 	votedFor    int
-	log         []LogEntry
+	log         []*LogEntry
 
 	// volatile state
 	commitIndex int
@@ -108,6 +108,14 @@ type Raft struct {
 // returns a random election timeout between ElectionTimeoutMin and ElectionTimeoutMax
 func randElectionTimeout() time.Duration {
 	return time.Duration(rand.Intn(ElectionTimeoutMax-ElectionTimeoutMin)+ElectionTimeoutMin) * time.Millisecond
+}
+
+func (rf *Raft) LogLength() int {
+	return rf.log[len(rf.log)-1].Index + 1
+}
+
+func (rf *Raft) LastLogItem() int {
+	return rf.log[len(rf.log)-1].Term
 }
 
 // resets the election timer using randElectionTimeout(). should only be called when:
@@ -209,7 +217,7 @@ func (rf *Raft) readPersist(data []byte) {
 	d := labgob.NewDecoder(r)
 	var pCurrentTerm int
 	var pVotedFor int
-	var pLog []LogEntry
+	var pLog []*LogEntry
 	if d.Decode(&pCurrentTerm) != nil ||
 		d.Decode(&pVotedFor) != nil || d.Decode(&pLog) != nil {
 		log.Fatal("Error reading persisted state")
@@ -261,7 +269,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 
 	if isLeader {
 		Debug(dLog, "Server %v received command %v | term: %v, index: %v", rf.me, command, term, index)
-		rf.log = append(rf.log, LogEntry{Term: term, Index: index, Command: command})
+		rf.log = append(rf.log, &LogEntry{Term: term, Index: index, Command: command})
 		rf.persist()
 	}
 
@@ -310,8 +318,8 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	//persistent state
 	rf.currentTerm = 0
 	rf.votedFor = -1
-	rf.log = make([]LogEntry, 1)
-	rf.log[0] = LogEntry{Term: 0, Index: 0, Command: nil}
+	rf.log = make([]*LogEntry, 1)
+	rf.log[0] = &LogEntry{Term: 0, Index: 0, Command: nil}
 
 	// initialize from state persisted before a crash
 	rf.readPersist(persister.ReadRaftState())

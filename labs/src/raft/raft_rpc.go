@@ -40,7 +40,6 @@ type AppendEntriesReply struct {
 // if the candidate's term is greater than the receiver's term, the receiver votes for the candidate
 // if the candidate's term is equal to the receiver's term, the receiver votes for the candidate if it has not voted for anyone else
 func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
-	// Your code here (2A, 2B).
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 
