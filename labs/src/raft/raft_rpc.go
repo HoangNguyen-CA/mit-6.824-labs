@@ -173,24 +173,30 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 // capitalized all field names in structs passed over RPC, and
 // that the caller passes the address of the reply struct with &, not
 // the struct itself.
+
 func (rf *Raft) broadcastRequestVotes() {
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+
+	if rf.state != Candidate {
+		return
+	}
+
 	for i := range rf.peers {
 		if i == rf.me {
 			continue
 		}
 
+		args := &RequestVoteArgs{
+			Term:         rf.currentTerm,
+			CandidateId:  rf.me,
+			LastLogIndex: len(rf.log) - 1,
+			LastLogTerm:  rf.log[len(rf.log)-1].Term,
+		}
+
+		Debug(dVote, "Server %v sending requestVote to %v | term: %v, lastLogIndex: %v, lastLogTerm: %v", rf.me, i, args.Term, args.LastLogIndex, args.LastLogTerm)
+
 		go func(p int) {
-
-			rf.mu.Lock()
-			args := &RequestVoteArgs{
-				Term:         rf.currentTerm,
-				CandidateId:  rf.me,
-				LastLogIndex: len(rf.log) - 1,
-				LastLogTerm:  rf.log[len(rf.log)-1].Term,
-			}
-
-			rf.mu.Unlock()
-
 			reply := &RequestVoteReply{}
 			ok := rf.peers[p].Call("Raft.RequestVote", args, reply)
 
@@ -214,42 +220,44 @@ func (rf *Raft) broadcastRequestVotes() {
 			}
 
 			rf.mu.Unlock()
+
 		}(i)
 	}
 }
 
 func (rf *Raft) broadcastAppendEntries() {
+
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+
+	if rf.state != Leader {
+		return
+	}
+
 	for i := range rf.peers {
 		if i == rf.me {
 			continue
 		}
 
+		var entries []LogEntry
+		if rf.nextIndex[i] < len(rf.log) {
+			temp := rf.log[rf.nextIndex[i]:]
+			entries = make([]LogEntry, len(temp))
+			copy(entries, temp)
+		}
+
+		args := &AppendEntriesArgs{
+			Term:         rf.currentTerm,
+			LeaderId:     rf.me,
+			PrevLogIndex: rf.nextIndex[i] - 1,
+			Entries:      entries,
+			PrevLogTerm:  rf.log[rf.nextIndex[i]-1].Term,
+			LeaderCommit: rf.commitIndex,
+		}
+
+		Debug(dAppend, "Server %v sending appendEntries to %v | nextIndex: %v, logLength: %v", rf.me, i, rf.nextIndex[i], len(rf.log))
+
 		go func(p int) {
-			rf.mu.Lock()
-
-			Debug(dAppend, "Server %v sending appendEntries to %v | nextIndex: %v, logLength: %v", rf.me, p, rf.nextIndex[p], len(rf.log))
-
-			//If last log index ≥ nextIndex for a follower: send AppendEntries RPC with log entries starting at nextIndex
-
-			reqNextIndex := rf.nextIndex[p]
-			var entries []LogEntry
-			if rf.nextIndex[p] < len(rf.log) {
-				temp := rf.log[rf.nextIndex[p]:]
-				entries = make([]LogEntry, len(temp))
-				copy(entries, temp)
-			}
-
-			args := &AppendEntriesArgs{
-				Term:         rf.currentTerm,
-				LeaderId:     rf.me,
-				PrevLogIndex: rf.nextIndex[p] - 1,
-				Entries:      entries,
-				PrevLogTerm:  rf.log[rf.nextIndex[p]-1].Term,
-				LeaderCommit: rf.commitIndex,
-			}
-
-			rf.mu.Unlock()
-
 			reply := &AppendEntriesReply{}
 			ok := rf.peers[p].Call("Raft.AppendEntries", args, reply)
 			if !ok {
@@ -264,14 +272,7 @@ func (rf *Raft) broadcastAppendEntries() {
 			//If successful: update nextIndex and matchIndex for follower (§5.3)
 			//If AppendEntries fails because of log inconsistency: decrement nextIndex and retry (§5.3)
 
-			// if reply.Success {
-			// 	rf.nextIndex[i] = reqNextIndex + len(entries)
-			// 	rf.matchIndex[i] = rf.nextIndex[i] - 1
-			// } else {
-			// 	rf.nextIndex[i]--
-			// }
-
-			updatedNextIndex := reqNextIndex + len(entries)
+			updatedNextIndex := args.PrevLogIndex + 1 + len(entries)
 			if reply.Success && updatedNextIndex > rf.nextIndex[p] {
 				rf.nextIndex[p] = updatedNextIndex
 				rf.matchIndex[p] = rf.nextIndex[p] - 1

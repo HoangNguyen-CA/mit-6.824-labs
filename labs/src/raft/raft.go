@@ -136,8 +136,8 @@ func (rf *Raft) demoteToFollower(nTerm int) {
 // (1) is candidate and won election.
 func (rf *Raft) promoteToLeader() {
 	rf.mu.Lock()
+	defer rf.mu.Unlock()
 	if rf.state != Candidate {
-		rf.mu.Unlock()
 		return
 	}
 	Debug(dInfo, "Server %v promoted to leader", rf.me)
@@ -148,8 +148,7 @@ func (rf *Raft) promoteToLeader() {
 	}
 
 	rf.state = Leader
-	rf.mu.Unlock()
-	rf.broadcastAppendEntries()
+	go rf.broadcastAppendEntries()
 }
 
 // converts to candidate and starts election. should only be called when:
@@ -157,12 +156,12 @@ func (rf *Raft) promoteToLeader() {
 // (2) is candidate and election timer expires.
 // call in goroutine to prevent waiting for RPCs
 func (rf *Raft) convertToCandidate() {
-
 	rf.mu.Lock()
+	defer rf.mu.Unlock()
 	if rf.state == Leader {
-		rf.mu.Unlock()
 		return
 	}
+
 	Debug(dVote, "Server %v started election for term %v", rf.me, rf.currentTerm+1)
 	rf.state = Candidate
 	rf.currentTerm++
@@ -170,9 +169,8 @@ func (rf *Raft) convertToCandidate() {
 	rf.votes = 1
 	rf.resetElectionTimer()
 	rf.persist()
-	rf.mu.Unlock()
 
-	rf.broadcastRequestVotes()
+	go rf.broadcastRequestVotes()
 }
 
 // return currentTerm and whether this server
@@ -360,9 +358,11 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 				rf.lastApplied++
 				entry := rf.log[rf.lastApplied]
 
-				rf.mu.Unlock()
+				Debug(dCommit, "Server %v applied command %v | term: %v, index: %v", rf.me, entry.Command, entry.Term, entry.Index)
 				applyMsg := ApplyMsg{CommandValid: true, Command: entry.Command, CommandIndex: entry.Index}
 				rf.applyCh <- applyMsg
+
+				rf.mu.Unlock()
 				continue
 			}
 			rf.mu.Unlock()
@@ -402,11 +402,7 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	go func() {
 		for !rf.killed() {
 			time.Sleep(HeartbeatInterval)
-			rf.mu.Lock()
-			if rf.state == Leader {
-				rf.broadcastAppendEntries()
-			}
-			rf.mu.Unlock()
+			go rf.broadcastAppendEntries()
 		}
 	}()
 
