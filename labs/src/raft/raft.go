@@ -96,9 +96,10 @@ type Raft struct {
 	matchIndex []int
 
 	//extra state
-	votes   int
-	state   State
-	applyCh chan ApplyMsg
+	votes    int
+	state    State
+	applyCh  chan ApplyMsg
+	commitCh chan struct{}
 
 	lastHeartbeat time.Time
 	timeoutDelay  time.Duration
@@ -188,9 +189,8 @@ func (rf *Raft) GetState() (int, bool) {
 // save Raft's persistent state to stable storage,
 // where it can later be retrieved after a crash and restart.
 // see paper's Figure 2 for a description of what should be persistent.
+// requires lock
 func (rf *Raft) persist() {
-	// Your code here (2C).
-	// Example:
 	w := new(bytes.Buffer)
 	e := labgob.NewEncoder(w)
 	e.Encode(rf.currentTerm)
@@ -205,8 +205,6 @@ func (rf *Raft) readPersist(data []byte) {
 	if data == nil || len(data) < 1 { // bootstrap without any state?
 		return
 	}
-	// Your code here (2C).
-	// Example:
 	r := bytes.NewBuffer(data)
 	d := labgob.NewDecoder(r)
 	var pCurrentTerm int
@@ -282,6 +280,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 func (rf *Raft) Kill() {
 	atomic.StoreInt32(&rf.dead, 1)
 	// Your code here, if desired.
+	rf.commitCh <- struct{}{} //exit commit goroutine
 }
 
 func (rf *Raft) killed() bool {
@@ -331,6 +330,7 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	rf.state = Follower
 	rf.lastHeartbeat = time.Now()
 	rf.timeoutDelay = randElectionTimeout()
+	rf.commitCh = make(chan struct{}, 1)
 
 	rf.mu.Unlock()
 
@@ -351,19 +351,15 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 
 	go func() {
 		for !rf.killed() {
-			time.Sleep(10 * time.Millisecond)
+			<-rf.commitCh
 
 			rf.mu.Lock()
-			if rf.commitIndex > rf.lastApplied {
+			for rf.commitIndex > rf.lastApplied {
 				rf.lastApplied++
 				entry := rf.log[rf.lastApplied]
-
 				Debug(dCommit, "Server %v applied command %v | term: %v, index: %v", rf.me, entry.Command, entry.Term, entry.Index)
 				applyMsg := ApplyMsg{CommandValid: true, Command: entry.Command, CommandIndex: entry.Index}
 				rf.applyCh <- applyMsg
-
-				rf.mu.Unlock()
-				continue
 			}
 			rf.mu.Unlock()
 		}
@@ -390,6 +386,7 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 					}
 					if count > len(rf.peers)/2 && rf.log[N].Term == rf.currentTerm {
 						rf.commitIndex = N
+						rf.commitCh <- struct{}{}
 						break
 					}
 				}
