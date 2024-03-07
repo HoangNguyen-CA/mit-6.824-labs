@@ -23,7 +23,7 @@ type AppendEntriesArgs struct {
 	LeaderId     int
 	PrevLogIndex int
 	PrevLogTerm  int
-	Entries      []LogEntry
+	Entries      []*LogEntry
 	LeaderCommit int
 }
 
@@ -200,34 +200,30 @@ func (rf *Raft) broadcastRequestVotes() {
 		go func(p int) {
 			reply := &RequestVoteReply{}
 			ok := rf.peers[p].Call("Raft.RequestVote", args, reply)
-
 			if !ok {
 				return
 			}
 
 			rf.mu.Lock()
+			defer rf.mu.Unlock()
 
 			if reply.Term > rf.currentTerm {
 				rf.demoteToFollower(reply.Term)
+				return
 			}
 
 			if reply.VoteGranted {
 				rf.votes++
 				if rf.votes > len(rf.peers)/2 {
-					rf.mu.Unlock()
-					rf.promoteToLeader()
+					go rf.promoteToLeader()
 					return
 				}
 			}
-
-			rf.mu.Unlock()
-
 		}(i)
 	}
 }
 
 func (rf *Raft) broadcastAppendEntries() {
-
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 
@@ -240,11 +236,19 @@ func (rf *Raft) broadcastAppendEntries() {
 			continue
 		}
 
-		var entries []LogEntry
+		var entries []*LogEntry
 		if rf.nextIndex[i] < len(rf.log) {
 			temp := rf.log[rf.nextIndex[i]:]
-			entries = make([]LogEntry, len(temp))
-			copy(entries, temp)
+
+			// deep copy
+			entries = make([]*LogEntry, len(temp))
+			for j := range temp {
+				entries[j] = &LogEntry{
+					Term:    temp[j].Term,
+					Index:   temp[j].Index,
+					Command: temp[j].Command,
+				}
+			}
 		}
 
 		args := &AppendEntriesArgs{
@@ -266,6 +270,8 @@ func (rf *Raft) broadcastAppendEntries() {
 			}
 
 			rf.mu.Lock()
+			defer rf.mu.Unlock()
+
 			if reply.Term > rf.currentTerm {
 				rf.demoteToFollower(reply.Term)
 			}
@@ -285,8 +291,6 @@ func (rf *Raft) broadcastAppendEntries() {
 					rf.nextIndex[p] = reply.XIndex
 				}
 			}
-
-			rf.mu.Unlock()
 		}(i)
 	}
 }
