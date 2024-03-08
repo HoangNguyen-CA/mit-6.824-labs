@@ -256,7 +256,7 @@ func (rf *Raft) broadcastAppendEntries() {
 			LeaderId:     rf.me,
 			PrevLogIndex: rf.nextIndex[i] - 1,
 			Entries:      entries,
-			PrevLogTerm:  rf.log[rf.nextIndex[i]-1].Term,
+			PrevLogTerm:  rf.log[rf.nextIndex[i]-1].Term, // TODO bug here
 			LeaderCommit: rf.commitIndex,
 		}
 
@@ -274,6 +274,7 @@ func (rf *Raft) broadcastAppendEntries() {
 
 			if reply.Term > rf.currentTerm {
 				rf.demoteToFollower(reply.Term)
+				return
 			}
 
 			//If successful: update nextIndex and matchIndex for follower (§5.3)

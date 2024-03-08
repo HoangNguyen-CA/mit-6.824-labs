@@ -1,0 +1,20 @@
+Test (2C): basic persistence ...
+  ... Passed --   4.4  3   92   22436    6
+Test (2C): more persistence ...
+  ... Passed --  17.2  5  964  201806   16
+Test (2C): partitioned leader and one follower crash, leader restarts ...
+  ... Passed --   2.2  3   40    9651    4
+Test (2C): Figure 8 ...
+  ... Passed --  33.4  5 1200  242169   27
+Test (2C): unreliable agreement ...
+  ... Passed --   7.6  5  304   97690  246
+Test (2C): Figure 8 (unreliable) ...
+panic: runtime error: index out of range [334] with length 275
+
+goroutine 19485 [running]:
+6.824/raft.(*Raft).broadcastAppendEntries(0xc0002ce5a0)
+	/home/hoang/go-projects/6.824labs/labs/src/raft/raft_rpc.go:259 +0x370
+created by 6.824/raft.Make.func4 in goroutine 11475
+	/home/hoang/go-projects/6.824labs/labs/src/raft/raft.go:410 +0x25
+exit status 2
+FAIL	6.824/raft	88.913s
