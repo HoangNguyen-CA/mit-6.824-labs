@@ -1,3 +1,0 @@
-# 6.5840/raft [6.5840/raft.test]
-./raft.go:213:15: rf.persister.SaveRaftState undefined (type *Persister has no field or method SaveRaftState)
-FAIL	6.5840/raft [build failed]
