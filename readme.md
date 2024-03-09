@@ -18,5 +18,3 @@ Brief summary of functionality:
 - If a task takes too long to complete (>10s), the coordinator will assign the task to a free worker.
 - Coordinator prevents data races by using a mutex lock. 
 
-![Lab1 test result](./lab1.png)
-
