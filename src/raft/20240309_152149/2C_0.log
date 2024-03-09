@@ -1,0 +1,4 @@
+raft.go:28:2: no required module provides package 6.824/labgob; to add it:
+	go get 6.824/labgob
+raft.go:29:2: no required module provides package 6.824/labrpc; to add it:
+	go get 6.824/labrpc
