@@ -1,9 +1,10 @@
 package raft
 
+import "sync/atomic"
+
 // example RequestVote RPC arguments structure.
 // field names must start with capital letters!
 type RequestVoteArgs struct {
-	// Your data here (2A, 2B).
 	Term         int
 	CandidateId  int
 	LastLogIndex int
@@ -13,7 +14,6 @@ type RequestVoteArgs struct {
 // example RequestVote RPC reply structure.
 // field names must start with capital letters!
 type RequestVoteReply struct {
-	// Your data here (2A).
 	Term        int
 	VoteGranted bool
 }
@@ -54,6 +54,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 
 	if args.Term > rf.currentTerm {
 		rf.demoteToFollower(args.Term)
+		reply.Term = args.Term
 	}
 
 	// If votedFor is null or candidateId, and candidate’s log is at
@@ -99,6 +100,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 	if args.Term > rf.currentTerm || rf.state == Candidate {
 		rf.demoteToFollower(args.Term)
+		reply.Term = args.Term
 	} else {
 		rf.resetElectionTimer()
 	}
@@ -135,10 +137,11 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 	//5. If leaderCommit > commitIndex, set commitIndex = min(leaderCommit, index of last new entry)
 	if args.LeaderCommit > rf.commitIndex {
-		if args.LeaderCommit < len(rf.log)-1 {
+		indexOfLastNewEntry := args.PrevLogIndex + len(args.Entries)
+		if args.LeaderCommit < indexOfLastNewEntry {
 			rf.commitIndex = args.LeaderCommit
 		} else {
-			rf.commitIndex = len(rf.log) - 1
+			rf.commitIndex = indexOfLastNewEntry
 		}
 
 		rf.commitCh <- struct{}{}
@@ -183,6 +186,15 @@ func (rf *Raft) broadcastRequestVotes() {
 		return
 	}
 
+	Debug(dVote, "Server %v started election for term %v", rf.me, rf.currentTerm+1)
+
+	rf.currentTerm++
+	rf.votedFor = rf.me
+	rf.persist()
+
+	var votes atomic.Uint32
+	votes.Add(1)
+
 	for i := range rf.peers {
 		if i == rf.me {
 			continue
@@ -212,9 +224,14 @@ func (rf *Raft) broadcastRequestVotes() {
 				return
 			}
 
+			// important to check if same election as when broadcast started
+			if rf.state != Candidate || rf.currentTerm != args.Term {
+				return
+			}
+
 			if reply.VoteGranted {
-				rf.votes++
-				if rf.votes > len(rf.peers)/2 {
+				votes.Add(1)
+				if int(votes.Load()) > len(rf.peers)/2 {
 					go rf.promoteToLeader()
 					return
 				}
@@ -251,16 +268,18 @@ func (rf *Raft) broadcastAppendEntries() {
 			}
 		}
 
+		Debug(dAppend, "Server %v sending appendEntries to %v | nextIndex: %v, logLength: %v", rf.me, i, rf.nextIndex[i], len(rf.log))
+
 		args := &AppendEntriesArgs{
 			Term:         rf.currentTerm,
 			LeaderId:     rf.me,
 			PrevLogIndex: rf.nextIndex[i] - 1,
 			Entries:      entries,
-			PrevLogTerm:  rf.log[rf.nextIndex[i]-1].Term, // TODO bug here
+			PrevLogTerm:  rf.log[rf.nextIndex[i]-1].Term, // TODO bug here?
 			LeaderCommit: rf.commitIndex,
 		}
 
-		Debug(dAppend, "Server %v sending appendEntries to %v | nextIndex: %v, logLength: %v", rf.me, i, rf.nextIndex[i], len(rf.log))
+		updatedNextIndex := rf.nextIndex[i] + len(entries)
 
 		go func(p int) {
 			reply := &AppendEntriesReply{}
@@ -277,20 +296,26 @@ func (rf *Raft) broadcastAppendEntries() {
 				return
 			}
 
-			//If successful: update nextIndex and matchIndex for follower (§5.3)
-			//If AppendEntries fails because of log inconsistency: decrement nextIndex and retry (§5.3)
+			if rf.state != Leader || rf.currentTerm != args.Term {
+				return
+			}
 
-			updatedNextIndex := args.PrevLogIndex + 1 + len(entries)
+			//If successful: update nextIndex and matchIndex for follower (§5.3)
 			if reply.Success && updatedNextIndex > rf.nextIndex[p] {
 				rf.nextIndex[p] = updatedNextIndex
 				rf.matchIndex[p] = rf.nextIndex[p] - 1
-			} else if !reply.Success && (reply.XIndex >= 1 || reply.XLen >= 1) {
+				return
+			}
+
+			//If AppendEntries fails because of log inconsistency: decrement nextIndex and retry (§5.3)
+			if !reply.Success && (reply.XIndex >= 1 || reply.XLen >= 1) {
 				Debug(dAppend, "Server %v appendEntries to %v failed | xIndex: %v, xLen: %v", rf.me, p, reply.XIndex, reply.XLen)
-				if reply.XLen >= 0 {
+				if reply.XLen >= 1 {
 					rf.nextIndex[p] = reply.XLen
 				} else {
 					rf.nextIndex[p] = reply.XIndex
 				}
+				return
 			}
 		}(i)
 	}

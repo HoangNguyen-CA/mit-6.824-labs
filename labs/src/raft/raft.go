@@ -19,8 +19,10 @@ package raft
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"math/rand"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -96,7 +98,6 @@ type Raft struct {
 	matchIndex []int
 
 	//extra state
-	votes    int
 	state    State
 	applyCh  chan ApplyMsg
 	commitCh chan struct{}
@@ -137,7 +138,6 @@ func (rf *Raft) demoteToFollower(nTerm int) {
 	rf.state = Follower
 	rf.currentTerm = nTerm
 	rf.votedFor = -1
-	rf.votes = 0
 	rf.persist()
 }
 
@@ -170,15 +170,7 @@ func (rf *Raft) convertToCandidate() {
 	if rf.state == Leader {
 		return
 	}
-
-	Debug(dVote, "Server %v started election for term %v", rf.me, rf.currentTerm+1)
 	rf.state = Candidate
-	rf.currentTerm++
-	rf.votedFor = rf.me
-	rf.votes = 1
-	rf.resetElectionTimer()
-	rf.persist()
-
 	go rf.broadcastRequestVotes()
 }
 
@@ -333,7 +325,6 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	rf.matchIndex = make([]int, len(rf.peers))
 
 	//extra state
-	rf.votes = 0
 	rf.applyCh = applyCh
 	rf.state = Follower
 	rf.lastHeartbeat = time.Now()
@@ -348,9 +339,7 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 
 			rf.mu.Lock()
 			if time.Since(rf.lastHeartbeat) > rf.timeoutDelay {
-				if rf.state != Leader {
-					go rf.convertToCandidate()
-				}
+				go rf.convertToCandidate()
 				rf.resetElectionTimer()
 			}
 			rf.mu.Unlock()
@@ -360,11 +349,30 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 	go func() {
 		for !rf.killed() {
 			<-rf.commitCh
+			//If commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine (§5.3)
 
 			rf.mu.Lock()
+			var builder strings.Builder
+
+			for index, value := range rf.log {
+				// Check if the pointer is not nil before dereferencing
+				if value != nil {
+					// Convert index and dereferenced value to string, and append to the result string
+					builder.WriteString(fmt.Sprintf("%d, %d | ", index, *value))
+				}
+			}
+
+			first := true
+
 			for rf.commitIndex > rf.lastApplied {
+
+				if first {
+					Debug("log: %v", builder.String())
+					first = false
+				}
 				rf.lastApplied++
 				entry := rf.log[rf.lastApplied]
+
 				Debug(dCommit, "Server %v applied command %v | term: %v, index: %v", rf.me, entry.Command, entry.Term, entry.Index)
 				applyMsg := ApplyMsg{CommandValid: true, Command: entry.Command, CommandIndex: entry.Index}
 				rf.applyCh <- applyMsg
@@ -378,7 +386,6 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 			time.Sleep(10 * time.Millisecond)
 
 			rf.mu.Lock()
-			//If commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine (§5.3)
 
 			if rf.state == Leader {
 				//If there exists an N such that N > commitIndex, a majority of matchIndex[i] ≥ N, and log[N].term == currentTerm: set commitIndex = N (§5.3, §5.4)
