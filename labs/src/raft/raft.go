@@ -19,10 +19,8 @@ package raft
 
 import (
 	"bytes"
-	"fmt"
 	"log"
 	"math/rand"
-	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -106,17 +104,31 @@ type Raft struct {
 	timeoutDelay  time.Duration
 }
 
-// returns a random election timeout between ElectionTimeoutMin and ElectionTimeoutMax
-func randElectionTimeout() time.Duration {
-	return time.Duration(rand.Intn(ElectionTimeoutMax-ElectionTimeoutMin)+ElectionTimeoutMin) * time.Millisecond
-}
+/* helper functions for log access */
 
 func (rf *Raft) LogLength() int {
 	return rf.log[len(rf.log)-1].Index + 1
 }
 
-func (rf *Raft) LastLogItem() int {
-	return rf.log[len(rf.log)-1].Term
+func (rf *Raft) LastLogItem() *LogEntry {
+	return rf.log[len(rf.log)-1]
+}
+
+func (rf *Raft) RealLogIndex(index int) int {
+	return index - rf.log[0].Index
+}
+
+func (rf *Raft) LogItem(index int) *LogEntry {
+	return rf.log[rf.RealLogIndex(index)]
+}
+
+func (rf *Raft) IndexInLog(index int) bool {
+	return index >= rf.log[0].Index
+}
+
+// returns a random election timeout between ElectionTimeoutMin and ElectionTimeoutMax
+func randElectionTimeout() time.Duration {
+	return time.Duration(rand.Intn(ElectionTimeoutMax-ElectionTimeoutMin)+ElectionTimeoutMin) * time.Millisecond
 }
 
 // resets the election timer using randElectionTimeout(). should only be called when:
@@ -152,7 +164,7 @@ func (rf *Raft) promoteToLeader() {
 	Debug(dInfo, "Server %v promoted to leader", rf.me)
 
 	for i := range rf.peers {
-		rf.nextIndex[i] = len(rf.log)
+		rf.nextIndex[i] = rf.LogLength()
 		rf.matchIndex[i] = 0
 	}
 
@@ -177,7 +189,6 @@ func (rf *Raft) convertToCandidate() {
 // return currentTerm and whether this server
 // believes it is the leader.
 func (rf *Raft) GetState() (int, bool) {
-	// Your code here (2A).
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 
@@ -235,6 +246,7 @@ func (rf *Raft) CondInstallSnapshot(lastIncludedTerm int, lastIncludedIndex int,
 // that index. Raft should now trim its log as much as possible.
 func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	// Your code here (2D).
+	rf.log = rf.log[rf.RealLogIndex(index):]
 
 }
 
@@ -254,7 +266,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	// Your code here (2B).
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
-	index := len(rf.log)
+	index := rf.LogLength()
 	term := rf.currentTerm
 
 	isLeader := rf.state == Leader
@@ -352,28 +364,25 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 			//If commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine (§5.3)
 
 			rf.mu.Lock()
-			var builder strings.Builder
+			// var builder strings.Builder
 
-			for index, value := range rf.log {
-				// Check if the pointer is not nil before dereferencing
-				if value != nil {
-					// Convert index and dereferenced value to string, and append to the result string
-					builder.WriteString(fmt.Sprintf("%d, %d | ", index, *value))
-				}
-			}
-
-			first := true
+			// for index, value := range rf.log {
+			// 	// Check if the pointer is not nil before dereferencing
+			// 	if value != nil {
+			// 		// Convert index and dereferenced value to string, and append to the result string
+			// 		builder.WriteString(fmt.Sprintf("%d, %d | ", index, *value))
+			// 	}
+			// }
 
 			for rf.commitIndex > rf.lastApplied {
-
-				if first {
-					Debug("log: %v", builder.String())
-					first = false
-				}
 				rf.lastApplied++
-				entry := rf.log[rf.lastApplied]
+				if !rf.IndexInLog(rf.lastApplied) {
+					continue
+				}
 
+				entry := rf.LogItem(rf.lastApplied)
 				Debug(dCommit, "Server %v applied command %v | term: %v, index: %v", rf.me, entry.Command, entry.Term, entry.Index)
+
 				applyMsg := ApplyMsg{CommandValid: true, Command: entry.Command, CommandIndex: entry.Index}
 				rf.applyCh <- applyMsg
 			}
@@ -389,7 +398,7 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 
 			if rf.state == Leader {
 				//If there exists an N such that N > commitIndex, a majority of matchIndex[i] ≥ N, and log[N].term == currentTerm: set commitIndex = N (§5.3, §5.4)
-				for N := len(rf.log) - 1; N > rf.commitIndex; N-- {
+				for N := rf.LastLogItem().Index; N > rf.commitIndex; N-- {
 					count := 1
 					for i := range rf.peers {
 						if i == rf.me {
@@ -399,7 +408,7 @@ func Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan 
 							count++
 						}
 					}
-					if count > len(rf.peers)/2 && rf.log[N].Term == rf.currentTerm {
+					if count > len(rf.peers)/2 && rf.LogItem(N).Term == rf.currentTerm {
 						rf.commitIndex = N
 						rf.commitCh <- struct{}{}
 						break

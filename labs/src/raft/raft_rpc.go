@@ -61,11 +61,11 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	// least as up-to-date as receiver’s log, grant vote (§5.2, §5.4)
 	logUpdated := true
 
-	if args.LastLogTerm < rf.log[len(rf.log)-1].Term {
+	if args.LastLogTerm < rf.LastLogItem().Term {
 		logUpdated = false
 	}
 
-	if args.LastLogTerm == rf.log[len(rf.log)-1].Term && args.LastLogIndex < len(rf.log)-1 {
+	if args.LastLogTerm == rf.LastLogItem().Term && args.LastLogIndex < rf.LastLogItem().Index {
 		logUpdated = false
 	}
 
@@ -107,15 +107,19 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 	// 2. Reply false if log doesn’t contain an entry at prevLogIndex whose term matches prevLogTerm (§5.3)
 	// send additional information for faster rollback
-	if args.PrevLogIndex >= len(rf.log) {
-		reply.XLen = len(rf.log)
+	if args.PrevLogIndex >= rf.LogLength() {
+		reply.XLen = rf.LogLength()
 		return
 	}
 
-	if rf.log[args.PrevLogIndex].Term != args.PrevLogTerm {
-		term := rf.log[args.PrevLogIndex].Term
+	if !rf.IndexInLog(args.PrevLogIndex) {
+		panic("TODO: prevLogIndex not in log")
+	}
+
+	if rf.LogItem(args.PrevLogIndex).Term != args.PrevLogTerm {
+		term := rf.LogItem(args.PrevLogIndex).Term
 		for i := args.PrevLogIndex; i >= 0; i-- {
-			if rf.log[i].Term != term || i == 0 {
+			if rf.LogItem(i).Term != term || i == 0 {
 				reply.XIndex = i + 1
 				break
 			}
@@ -128,8 +132,8 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	for _, entry := range args.Entries {
 		if entry.Index >= len(rf.log) {
 			rf.log = append(rf.log, entry)
-		} else if rf.log[entry.Index].Term != entry.Term {
-			rf.log = append(rf.log[:entry.Index], entry)
+		} else if rf.LogItem(entry.Index).Term != entry.Term {
+			rf.log = append(rf.log[:rf.RealLogIndex(entry.Index)], entry)
 		}
 	}
 
@@ -203,8 +207,8 @@ func (rf *Raft) broadcastRequestVotes() {
 		args := &RequestVoteArgs{
 			Term:         rf.currentTerm,
 			CandidateId:  rf.me,
-			LastLogIndex: len(rf.log) - 1,
-			LastLogTerm:  rf.log[len(rf.log)-1].Term,
+			LastLogIndex: rf.LastLogItem().Index,
+			LastLogTerm:  rf.LastLogItem().Term,
 		}
 
 		Debug(dVote, "Server %v sending requestVote to %v | term: %v, lastLogIndex: %v, lastLogTerm: %v", rf.me, i, args.Term, args.LastLogIndex, args.LastLogTerm)
@@ -254,8 +258,8 @@ func (rf *Raft) broadcastAppendEntries() {
 		}
 
 		var entries []*LogEntry
-		if rf.nextIndex[i] < len(rf.log) {
-			temp := rf.log[rf.nextIndex[i]:]
+		if rf.nextIndex[i] < rf.LogLength() {
+			temp := rf.log[rf.RealLogIndex(rf.nextIndex[i]):]
 
 			// deep copy
 			entries = make([]*LogEntry, len(temp))
@@ -275,7 +279,7 @@ func (rf *Raft) broadcastAppendEntries() {
 			LeaderId:     rf.me,
 			PrevLogIndex: rf.nextIndex[i] - 1,
 			Entries:      entries,
-			PrevLogTerm:  rf.log[rf.nextIndex[i]-1].Term, // TODO bug here?
+			PrevLogTerm:  rf.LogItem(rf.nextIndex[i] - 1).Term,
 			LeaderCommit: rf.commitIndex,
 		}
 
