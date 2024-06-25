@@ -4,9 +4,8 @@
 
 
 ## Lab 1: MapReduce
-http://nil.csail.mit.edu/6.824/2022/labs/lab-mr.html
 
-MapReduce implementation in Go, operates on the local filesystem but simulates distributed MapReduce. 
+MapReduce implementation in Go, operates on the local filesystem but simulates distributed MapReduce. Overall, this lab was straight-forward, although it took some time to get acquainted with Go RPC calls and storing intermediate data.
 
 Brief summary of functionality: 
 - One coordinator node and N worker nodes. 
@@ -19,3 +18,19 @@ Brief summary of functionality:
 - If a task takes too long to complete (>10s), the coordinator will assign the task to a free worker.
 - Coordinator prevents data races by using a mutex lock. 
 
+# Lab 2: Raft
+
+## 2A: Leader Election
+
+![2A Tests](2A.png)
+
+## 2B: Log 
+
+![2B Tests](2B.png)
+
+## 2C: Persistence 
+
+![@C Tests](2C.png)
+
+## 2D: Snapshot
+![2D Tests](2D.png)
