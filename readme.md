@@ -1,7 +1,8 @@
-# mit-6.824-labs
+# mit-6.5840-labs (2023)
 
-6.824 labs, source code is kept private due to [Collaboration Policy](http://nil.csail.mit.edu/6.5840/2023/labs/collab.html).
+6.5840 labs, source code is kept private due to [Collaboration Policy](http://nil.csail.mit.edu/6.5840/2023/labs/collab.html).
 
+use `git clone --recurse-submodules` to fetch src
 
 ## Lab 1: MapReduce
 
@@ -13,7 +14,7 @@ Brief summary of functionality:
 - Worker contacts coordinator through RPC calls, see rpc.go for more info on data payloads.
 - Coordinator keeps track of all tasks and their progress, and continues to distribute tasks to workers until everything is complete. 
 - All map tasks must complete before reduce tasks. Number of reduce tasks are specified by program.
-- Each map task maps to nReduce intemediary files on the local filesystem.
+- Each map task maps to nReduce intermediary files on the local filesystem.
 - Each reduce task consumes from corresponding intermediary files and produces final result.
 - If a task takes too long to complete (>10s), the coordinator will assign the task to a free worker.
 - Coordinator prevents data races by using a mutex lock. 
@@ -34,3 +35,8 @@ Brief summary of functionality:
 
 ## 2D: Snapshot
 ![2D Tests](2D.png)
+
+## 3A:
+
+## 3B:
+
